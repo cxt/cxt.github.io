@@ -1,0 +1,408 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>缓存之Redis(二) | CXT&#39;s Blog</title>
+  <meta name="author" content="cxt">
+  
+  <meta name="description" content="Redis与Memcache对比
+进程数：首先Redis是单进程的，Memcache是多进程的。
+是否支持数据持久化、主从复制：Redis是支持数据持久化的，有两种方式RDB和AOF；RDB是将数据库的快照以二进制的方式存储到磁盘；AOF是将命令的日志记录到AOF文件。Redis是支持主从复制的。Memcache是不支持持久化的所有数据都放在内存。
+支持的数据类型：Redis除了支持支持key-val，还支持Hash（哈希表），List，SET，ZSET；Memcache只支持简单的key-val。
+性能对比：性能方面，事实上两者的性能都足够高，当然因为Redis是单进程的，Memcache是多进程的，在存储大数据（100k）以上的情况，Memcache略高于Redis,在存储小数据时，Redis性能是要高于Memcache的。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="缓存之Redis(二)"/>
+  <meta property="og:site_name" content="CXT&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="CXT&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">CXT&#39;s Blog</a></h1>
+  <h2><a href="/">CLKBKB的个人博客，记录生活与技术的点滴！</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+    <li> <a href="/atom.xml">RSS</a> </li>
+
+    <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一High</a> </li>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-10T07:50:36.000Z"><a href="/2016/05/10/缓存之Redis-二/">May 10 2016</a></time>
+      
+      
+  
+    <h1 class="title">缓存之Redis(二)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="Redis与Memcache对比">Redis与Memcache对比</h1><ol>
+<li><strong>进程数</strong>：首先Redis是单进程的，Memcache是多进程的。</li>
+<li><strong>是否支持数据持久化、主从复制</strong>：Redis是支持数据持久化的，有两种方式RDB和AOF；RDB是将数据库的快照以二进制的方式存储到磁盘；AOF是将命令的日志记录到AOF文件。Redis是支持主从复制的。Memcache是不支持持久化的所有数据都放在内存。</li>
+<li><strong>支持的数据类型</strong>：Redis除了支持支持key-val，还支持Hash（哈希表），List，SET，ZSET；Memcache只支持简单的key-val。</li>
+<li><strong>性能对比</strong>：性能方面，事实上两者的性能都足够高，当然因为Redis是单进程的，Memcache是多进程的，在存储大数据（100k）以上的情况，Memcache略高于Redis,在存储小数据时，Redis性能是要高于Memcache的。<a id="more"></a>
+</li>
+</ol>
+<p><strong>如何选择：有持久化的需求以及多种数据结构的需求建议使用Redis。</strong></p>
+<p>Redis作者在stackoverflow对redis与memcache的对比的回答：</p>
+<blockquote>
+<p>You should not care too much about performances. Redis is faster per core with small values, but memcached is able to use multiple cores with a single executable and TCP port without help from the client. Also memcached is faster with big values in the order of 100k. Redis recently improved a lot about big values (unstable branch) but still memcached is faster in this use case. The point here is: nor one or the other will likely going to be your bottleneck for the query-per-second they can deliver.<br>You should care about memory usage. For simple key-value pairs memcached is more memory efficient. If you use Redis hashes, Redis is more memory efficient.Depends on the use case.<br>You should care about persistence and replication, two features only available in Redis. Even if your goal is to build a cache it helps that after an upgrade or a reboot your data are still there.<br>You should care about the kind of operations you need. In Redis there are a lot of complex operations, even just considering the caching use case, you often can do a lot more in a single operation, without requiring data to be processed client side (a lot of I/O is sometimes needed). This operations are often as fast as plain GET and SET. So if you don’t need just GEt/SET but more complex things Redis can help a lot (think at timeline caching).</p>
+</blockquote>
+<p>翻译如下：</p>
+<p>没有必要过多的关注性能。由于Redis只使用单核，而Memcached可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比Memcached性能更高。而在100k以上的数据中，Memcached性能要高于Redis，虽然Redis最近也在存储大数据的性能上进行优化，但是比起Memcached，还是稍有逊色。说了这么多，结论是，无论你使用哪一个，每秒处理请求的次数都不会成为瓶颈。</p>
+<p>你需要关注内存使用率。对于key-value这样简单的数据储存，memcache的内存使用率更高。如果采用hash结构，redis的内存使用率会更高。当然，这些都依赖于具体的应用场景。</p>
+<p>你需要关注关注数据持久化和主从复制时，只有redis拥有这两个特性。如果你的目标是构建一个缓存在升级或者重启后之前的数据不会丢失的话，那也只能选择redis。</p>
+<p>你应该关心你需要的操作。redis支持很多复杂的操作，甚至只考虑内存的使用情况，在一个单一操作里你常常可以做很多，而不需要将数据读取到客户端中（这样会需要很多的IO操作）。这些复杂的操作基本上和纯GET和POST操作一样快，所以你不只是需要GET/SET而是更多的操作时，redis会起很大的作用。</p>
+<h1 id="Redis集群相关">Redis集群相关</h1><h2 id="Redis常见的集群技术">Redis常见的集群技术</h2><ul>
+<li>客户端耦合分片路由规则</li>
+<li>分离路由规则成一个代理服务（解耦）</li>
+<li>Redis Cluster</li>
+</ul>
+<p><strong>客户端耦合分片路由规则</strong>，把分片的规则写死在客户端里面，这种优势是比较简单，容易实现，缺点就是耦合度高，改动代价大。<br><strong>代理模式</strong>，用代理进行分片主要的好处当然是解耦，改动只要改代理就行，当然代理服务会损失一点点的性能。<br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.png" alt=""><br>代理分片一般用的都是一些开源的中间件，比如Twitter的Twemproxy。<br><strong>Redis Cluster</strong><br>Redis Cluster是一种去中心化的思想，Redis的每一个实例两两相连通讯，客户端随机连接一个实例，如果该实例没有查询的数据，就会去其他实例查询。Redis cluster的集群信息通过两两相连通讯进行交换更新等操作。<br>这是一种相对比较重的实现,完全的去中心化，集群不容易管理。</p>
+<h2 id="Twemproxy">Twemproxy</h2><p>Twitter,开源的一种代理模式，请求访问代理，然后根据路由规则去对应的实例去数据，然后通过代理返回给客户端。当然Twemproxy是存在单点故障，可以使用keepalived来保障高可用。<br>魅族现在用的就是Twemproxy！<br>Twemproxy缺点就是不能平滑的扩容与及缩容，还有就是没有控制面板（Dashboard）来进行监控管理。</p>
+<h2 id="codis">codis</h2><p>国内公司开源的软件，不是很了解，据说解决了Twemproxy现有存在的相关痛点。github地址<a href="https://github.com/CodisLabs/codis" target="_blank" rel="external">https://github.com/CodisLabs/codis</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/redis/">redis</a>, <a href="/categories/redis/缓存/">缓存</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/redis/">redis</a>, <a href="/tags/缓存/">缓存</a>
+  </div>
+
+        <div class="bdsharebuttonbox"><a class="bds_more" href="#" data-cmd="more"></a><a title="分享到QQ空间" class="bds_qzone" href="#" data-cmd="qzone"></a><a title="分享到新浪微博" class="bds_tsina" href="#" data-cmd="tsina"></a><a title="分享到腾讯微博" class="bds_tqq" href="#" data-cmd="tqq"></a><a title="分享到人人网" class="bds_renren" href="#" data-cmd="renren"></a><a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <nav id="pagination" >
+    
+    <a href="/2016/05/12/浅谈互联网数据架构/" class="alignleft prev" >上一页</a>
+    
+    
+    <a href="/2016/05/08/缓存之Redis（一）/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
+<section id="comment">
+ <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="/2016/05/10/缓存之Redis-二/" data-title="" data-url=""></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"clkbkb"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+</section>
+
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:cxt.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/redis/">redis</a><small>2</small></li>
+  
+    <li><a href="/categories/系统设计/数据库架构/">数据库架构</a><small>1</small></li>
+  
+    <li><a href="/categories/生活感悟/">生活感悟</a><small>2</small></li>
+  
+    <li><a href="/categories/系统设计/">系统设计</a><small>3</small></li>
+  
+    <li><a href="/categories/redis/缓存/">缓存</a><small>2</small></li>
+  
+    <li><a href="/categories/计划/">计划</a><small>1</small></li>
+  
+    <li><a href="/categories/负载均衡/">负载均衡</a><small>1</small></li>
+  
+    <li><a href="/categories/负载均衡/高可用/">高可用</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+  </div>
+</div>
+
+
+  <div class="widget tag">
+<h3 class="title">个人简介</h3>
+<ul class="entry">
+<li><b>运动与文艺的程序猿一枚</b></li>
+<li>java服务端,熟悉相关后台技术</li>
+<li>毕业于广东工业大学</li>
+<li>邮箱：clkbk@gmail.com</li>
+<li>QQ与微信：940300313</li>
+</ul>
+</div>
+
+  <div class="widget tag">
+<h3 class="title">微信二维码</h3>
+<ul class="entry">
+<li>微信扫扫，添加好友，从此不寂寞</li>
+<li><a href="http://7s1ri4.com1.z0.glb.clouddn.com/660640562045536355.jpg" title="" class="fancybox" rel="gallery3"><img width="100%" src="http://7s1ri4.com1.z0.glb.clouddn.com/660640562045536355.jpg"></a></li>
+</ul>
+</div>
+
+  <div class="widget tag">
+<h3 class="title">我的關注</h3>
+<ul class="entry">
+<li><a href="http://dongxicheng.org/">董西成的博客</a></li>
+<li><a href="http://rednaxelafx.iteye.com/">R大的VM博客</a></li>
+<li><a href="http://blog.csdn.net/v_july_v">July的算法博客</a></li>
+<li><a href="https://github.com/julycoding/The-Art-Of-Programming-By-July/blob/master/ebook/zh/Readme.md">July的编程艺术GitHub</a></li>
+<li><a href="http://hllvm.group.iteye.com/">HLVMGroup</a></li>
+<li><a href="http://daiziguizhong.qiniudn.com/category.html">待字闺中</a> </li>
+<li><a href="http://coolshell.cn/">耗子叔的酷壳</a></li>
+<li><a href="http://ifeve.com/">并发编程网</a></li>
+<li><a href="http://zh.lucida.me/">Lucida</a></li>
+<li><a href="http://blog.yufeng.info/">余峰</a></li>
+<li><a href="http://it.deepinmind.com">花名有孚</a></li>
+<li><a href="http://zipperary.com/" title="Zippera's Blog">Zippera</a></li>
+</ul>
+</div>
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 cxt
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

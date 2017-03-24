@@ -1,0 +1,421 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>记活动中心性能坑 | CXT&#39;s Blog</title>
+  <meta name="author" content="cxt">
+  
+  <meta name="description" content="今天是立夏,有点燥热的天气，备上一杯清茶，来细细分析一下。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="记活动中心性能坑"/>
+  <meta property="og:site_name" content="CXT&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="CXT&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">CXT&#39;s Blog</a></h1>
+  <h2><a href="/">CLKBKB的个人博客，记录生活与技术的点滴！</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+    <li> <a href="/atom.xml">RSS</a> </li>
+
+    <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一High</a> </li>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-05T03:32:05.000Z"><a href="/2016/05/05/记活动中心性能坑/">May 5 2016</a></time>
+      
+      
+  
+    <h1 class="title">记活动中心性能坑</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><strong> 今天是立夏,有点燥热的天气，备上一杯清茶，来细细分析一下。 </strong></p>
+<p><img src="http://cxtblog.qiniudn.com/4.jpg" alt=""><br><a id="more"></a><br>最近接手一个新的项目，项目的人员辞职的辞职，甩锅的甩锅。甚是无奈，然而这个项目第一期的开发实现功能在五月初就要上线。既然锅甩到我们这边，还是得勇敢地接锅。</p>
+<p>活动的业务逻辑是这样的:用户做任务获取抽奖资格（抽奖机会），根据抽奖机会就行抽奖。<br>截图如下：<br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/h%E9%A6%96%E9%A1%B5.jpg" alt=""><img src="http://7s1ri4.com1.z0.glb.clouddn.com/h%E6%8A%BD%E5%A5%96.jpg" alt=""></p>
+<h1 id="出现的问题">出现的问题</h1><p>由于昨天资讯的推送，推送量很大每秒推送2000个用户，总共有用户1000w左右，一时间同时参加活动的人数就马上上去了。每个接口的相应时间都超过平时，有些比较多操作的接口都直接超时。用户很多吐槽的。问题有：</p>
+<ol>
+<li><strong> 接口响应过慢 </strong>（主要有用户任务列表接口，最新中奖用户接口，抽奖接口）</li>
+<li><strong> 抽奖接口问题 </strong> ，抽奖接口相应时间超过5秒，导致前端直接置为抽奖初始状态，让用户在前面点击抽奖接口没返回又点击了一次抽奖，这时上一个接口没返回，导致两次点击用的是同一个抽奖机会，结果第二个请求校验抽奖机会已经被第一个用了，第二个请求直接返回给用户（“抽奖券状态不对”），然而这是前端是抽奖初始状态（3个图都是手机pro6），用户还以为自己中奖，所以导致大部分用户投诉。</li>
+<li><strong> 数据库压力过大和慢SQL </strong>后面查一下几台jetty的负载情况，发现几台jetty的负载情况正常，然后马上叫DBA看一下数据库的，果然数据库的连接数从300彪到1K+,网络流量也是急速上涨，然后DBA看了一下慢SQL，在user_award这张表产生了大量的查询慢sql。<br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0.jpg" alt=""><img src="http://7s1ri4.com1.z0.glb.clouddn.com/mysql%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F.jpg" alt=""></li>
+<li><strong> 没有索引 </strong>慢sql的原因主要还是因为，user_award表访问得很多，而且TM的居然没有索引。</li>
+</ol>
+<h1 id="现阶段活动中心的架构">现阶段活动中心的架构</h1><p>现在的架构是前面一台LVS做负载均衡,3台nginx做反向代理，6台jetty(一台nginx对应两台jetty),还有一台nginx+jetty作为灰度。数据库的结构是读写都在主库并且做了高可用，缓存用的是redis,一主一从。<br>架构上体现的问题有：</p>
+<ul>
+<li>读写都在同一个库，如果产生查询慢SQL的话，就会同时影响到写操作和读操作。（这次由于user_award表没有加索引，这个表有大量的读操作，所以产生了慢SQL，导致数据库堵塞，数据库连接数疯狂飙升到1K+）<h1 id="业务场景">业务场景</h1></li>
+</ul>
+<p>这也是一个<strong> 读多写少 </strong>业务场景，读写比例大概为8：2，也是十分适合大量用缓存的。核心矛盾是写操作，主要涉及到的有用户做任务这一块，以及抽奖这一块，出现的问题有：</p>
+<ul>
+<li>用户相关的数据没有用缓存，比如用户做任务的列表数据，中奖名单没有做缓存，用户积分信息没有做缓存，老虎机奖品布局接口。</li>
+</ul>
+<p>由于这些接口没有做缓存处理，导致直接影响到我们的这个项目的核心矛盾：抽奖接口。<br>下面谈谈抽奖接口的业务逻辑：</p>
+<ol>
+<li>检查用户是否有抽奖机会（查询用户任务完成的状态）</li>
+<li>检查用户是否中奖达到阀值。</li>
+<li>更新用户抽奖券状态为已经使用。</li>
+<li>抽奖：拿出抽奖的奖品按照权重以及随机数进行抽奖</li>
+<li>如果抽中奖品的话，会检查奖品的库存，如果库存不够就不会中奖，如果库存够机会数据库记录一条记录。</li>
+<li>更新用户该任务为已经抽奖状态。</li>
+</ol>
+<p>我们可以看到抽奖接口的读操作以及写操作都比较多，所以抽奖接口是这所有接口使用时间最长的接口，开发的时候我也知道这个接口肯定会有大量的并发请求。所以我加一个5秒抽奖只能抽奖一次的限制，就是同一个用户5秒之内只能请求一次。</p>
+<p>我的做法是用户每次抽奖将用户的ID作为key记录到redis里面，5秒之后过期，如果redis查询到说明用户5秒被已经抽过奖所以不能再抽一次，要等到redis里面的key过期才能抽奖。</p>
+<p>然而由于上述的<strong> 数据库架构 </strong>，<strong> 表没加索引 </strong>，<strong> 用户相关数据没有大量使用缓存 </strong>导致出现性能的问题。</p>
+<h1 id="处理方法">处理方法</h1><h2 id="实时问题的处理">实时问题的处理</h2><ul>
+<li>由于这次是由于大量推送，导致参加的用户过多，所以当时马上停止用户消息推送。</li>
+<li>马上定位问题所在，通过查看服务器的负载情况，发现服务器负载正常，然后赶紧联系DBA查看DB的负载情况，定位到慢SQL，赶紧加上索引。</li>
+<li>运营安抚用户的情绪。</li>
+</ul>
+<h2 id="后期的优化">后期的优化</h2><ul>
+<li><strong> 数据库架构的调整 </strong>：由于业务场景读多写少，采用<strong> 一主多从 </strong>的数据库结构比较适合。</li>
+<li><strong> 数据表的水平拆分 </strong>：用户数据表进行分库或者分表。</li>
+<li><strong> 利用好缓存 </strong> : 用户的任务列表可以存到redis，用户奖品信息也可以存到redis，用户抽奖券也可以存到redis，抽奖的相关信息也可以存到redis，不同的数据设置好不同的过期时间，数据更新时先淘汰缓存再写数据库，避免脏数据的产生。</li>
+<li><strong> 静态资源CDN </strong>：H5这些静态资源放在CDN上面。</li>
+<li><strong> 大并发的控制 </strong>：用户调用抽奖接口应有限制，前端：比如转盘老虎机之类的抽奖，可以控制同个10秒之内只能请求一次（因为转盘老虎机这些转动都需要时间）；后端：为了防止别人刷接口，也要加上10秒的访问控制，用redis过期策略来做就行，当发现接口比较慢，可以直接返回不中奖以减少数据库的压力，这样对用户的影响也是很小的，<strong> 想方设法在大并发接口减少数据库的操作 </strong>同时应该保障接口的基本业务逻辑不受影响，平衡好这两点。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/系统设计/">系统设计</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/坑/">坑</a>, <a href="/tags/性能/">性能</a>, <a href="/tags/系统设计/">系统设计</a>
+  </div>
+
+        <div class="bdsharebuttonbox"><a class="bds_more" href="#" data-cmd="more"></a><a title="分享到QQ空间" class="bds_qzone" href="#" data-cmd="qzone"></a><a title="分享到新浪微博" class="bds_tsina" href="#" data-cmd="tsina"></a><a title="分享到腾讯微博" class="bds_tqq" href="#" data-cmd="tqq"></a><a title="分享到人人网" class="bds_renren" href="#" data-cmd="renren"></a><a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <nav id="pagination" >
+    
+    <a href="/2016/05/08/缓存之Redis（一）/" class="alignleft prev" >上一页</a>
+    
+    
+    <a href="/2016/05/03/负载均衡与高可用-LVS-keepalived-nginx/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
+<section id="comment">
+ <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="/2016/05/05/记活动中心性能坑/" data-title="" data-url=""></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"clkbkb"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+</section>
+
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:cxt.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/redis/">redis</a><small>2</small></li>
+  
+    <li><a href="/categories/系统设计/数据库架构/">数据库架构</a><small>1</small></li>
+  
+    <li><a href="/categories/生活感悟/">生活感悟</a><small>2</small></li>
+  
+    <li><a href="/categories/系统设计/">系统设计</a><small>3</small></li>
+  
+    <li><a href="/categories/redis/缓存/">缓存</a><small>2</small></li>
+  
+    <li><a href="/categories/计划/">计划</a><small>1</small></li>
+  
+    <li><a href="/categories/负载均衡/">负载均衡</a><small>1</small></li>
+  
+    <li><a href="/categories/负载均衡/高可用/">高可用</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+  </div>
+</div>
+
+
+  <div class="widget tag">
+<h3 class="title">个人简介</h3>
+<ul class="entry">
+<li><b>运动与文艺的程序猿一枚</b></li>
+<li>java服务端,熟悉相关后台技术</li>
+<li>毕业于广东工业大学</li>
+<li>邮箱：clkbk@gmail.com</li>
+<li>QQ与微信：940300313</li>
+</ul>
+</div>
+
+  <div class="widget tag">
+<h3 class="title">微信二维码</h3>
+<ul class="entry">
+<li>微信扫扫，添加好友，从此不寂寞</li>
+<li><a href="http://7s1ri4.com1.z0.glb.clouddn.com/660640562045536355.jpg" title="" class="fancybox" rel="gallery3"><img width="100%" src="http://7s1ri4.com1.z0.glb.clouddn.com/660640562045536355.jpg"></a></li>
+</ul>
+</div>
+
+  <div class="widget tag">
+<h3 class="title">我的關注</h3>
+<ul class="entry">
+<li><a href="http://dongxicheng.org/">董西成的博客</a></li>
+<li><a href="http://rednaxelafx.iteye.com/">R大的VM博客</a></li>
+<li><a href="http://blog.csdn.net/v_july_v">July的算法博客</a></li>
+<li><a href="https://github.com/julycoding/The-Art-Of-Programming-By-July/blob/master/ebook/zh/Readme.md">July的编程艺术GitHub</a></li>
+<li><a href="http://hllvm.group.iteye.com/">HLVMGroup</a></li>
+<li><a href="http://daiziguizhong.qiniudn.com/category.html">待字闺中</a> </li>
+<li><a href="http://coolshell.cn/">耗子叔的酷壳</a></li>
+<li><a href="http://ifeve.com/">并发编程网</a></li>
+<li><a href="http://zh.lucida.me/">Lucida</a></li>
+<li><a href="http://blog.yufeng.info/">余峰</a></li>
+<li><a href="http://it.deepinmind.com">花名有孚</a></li>
+<li><a href="http://zipperary.com/" title="Zippera's Blog">Zippera</a></li>
+</ul>
+</div>
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 cxt
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>权限管理的设计 | CXT&#39;s Blog</title>
+  <meta name="author" content="cxt">
+  
+  <meta name="description" content="一个成熟的管理后台必须要有相应的权限控制进行访问限制，今天我就简单说一下我的一个权限控制的设计~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="权限管理的设计"/>
+  <meta property="og:site_name" content="CXT&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="CXT&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">CXT&#39;s Blog</a></h1>
+  <h2><a href="/">CLKBKB的个人博客，记录生活与技术的点滴！</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+    <li> <a href="/atom.xml">RSS</a> </li>
+
+    <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一High</a> </li>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-24T11:41:25.000Z"><a href="/2016/03/24/权限管理的设计/">Mar 24 2016</a></time>
+      
+      
+  
+    <h1 class="title">权限管理的设计</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/923876_798712953566533_1373700683_n.jpg" alt=""><br>一个成熟的管理后台必须要有相应的权限控制进行访问限制，今天我就简单说一下我的一个权限控制的设计~<br><a id="more"></a></p>
+<h2 id="1、_数据库的设计">1、    数据库的设计</h2><p>一般来说，有一定规模的管理系统要上管理权限的设计，就必须把权限和权限分配相关的内容存到<strong>数据库</strong>，小系统的话，存放在配置文件也是可以，但是系统一旦大了就难以维护，所以权限管理还是得存放在数据库里面。<br>涉及的表一般有：</p>
+<ul>
+<li>资源表（T_AUTH_RESOURCE）</li>
+<li>用户表（T_AUTH_USER）</li>
+<li>角色表（T_AUTH_ROLE）</li>
+<li>角色与资源关联表（T_AUTH_ROLE_RESOURCE）</li>
+<li>用户与角色关联表（T_AUTH_GRANT）</li>
+</ul>
+<p>数据库表关系如下：<br><strong>资源表</strong>存储相关的资源的CRUD的url资源。<strong>用户表</strong>存储用户信息。<strong>角色表</strong>存储权限的角色。<strong>角色**</strong>与资源关联表<strong>存储相关角色与相关资源的关联。 </strong>用户与角色关联表**存储用户与相关角色的关联。</p>
+<p>表结构如下：</p>
+<p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%BB%93%E6%9E%84.jpg" alt=""></p>
+<h2 id="2、_权限控制处理">2、    权限控制处理</h2><p>权限控制一般有两种方法，<strong>过滤器</strong>（Filter）过滤请求, <strong>拦截器</strong>（Interceptor）拦截请求。</p>
+<ol>
+<li><p>过滤器处理，在用户请求时，首先会先进入过滤器链，执行每一个过滤器的doFilter方法。我们可以在doFilter方法里面获取用户请求的url以及相关的请求参数，然后从上下文获取用户信息进行权限控制的业务逻辑处理。<br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/filter.jpg" alt="过滤器执行流程图"></p>
+</li>
+<li><p>拦截器处理，拦截器是spring mvc框架的一个特性，具体的流程看下图。我们可以在拦截器的提前处理的方法里面进行权限控制的处理。<br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/interceptor.jpg" alt="拦截器流程图"></p>
+</li>
+<li>我们将采用<strong>过滤器</strong>进行过滤处理，理由是过滤器处理比较简单，并且不用依赖于框架。<h2 id="3、性能优化">3、性能优化</h2>由于用户的请求都要经过过滤器或者拦截器的处理，每一次的处理都具有一定的时间和资源（查数据库等）的开销，所以如果请求量非常大的话，这时权限控制必然是系统的一个瓶颈。现在要做的优化工作主要还是上缓存。上缓存主要有两个级别的缓存。</li>
+</ol>
+<ul>
+<li>全局的缓存——也就是redis缓存，把权限信息放在redis里面。加快查询速度。</li>
+</ul>
+<ul>
+<li>会话级别的缓存——也就是同一个用户在登录期间对权限进行缓存，加快权限处理速度。</li>
+</ul>
+<h2 id="4、_如何接入">4、    如何接入</h2><p>因为权限控制处理这一块都是比较基础共通的，为了方便其他应用的快速方便地接入，接入只需要要做如下工作就行：</p>
+<ul>
+<li>在数据库,创建好相关的表(我这边提供表结构)。</li>
+</ul>
+<ul>
+<li>配置一下我实现好的Filter。</li>
+</ul>
+<ul>
+<li>在数据库里面预先插入相关的资源和角色还有默认系统管理员。<br>完成上面操作就可以了。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/系统设计/">系统设计</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/系统设计/">系统设计</a>
+  </div>
+
+        <div class="bdsharebuttonbox"><a class="bds_more" href="#" data-cmd="more"></a><a title="分享到QQ空间" class="bds_qzone" href="#" data-cmd="qzone"></a><a title="分享到新浪微博" class="bds_tsina" href="#" data-cmd="tsina"></a><a title="分享到腾讯微博" class="bds_tqq" href="#" data-cmd="tqq"></a><a title="分享到人人网" class="bds_renren" href="#" data-cmd="renren"></a><a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <nav id="pagination" >
+    
+    <a href="/2016/05/03/负载均衡与高可用-LVS-keepalived-nginx/" class="alignleft prev" >上一页</a>
+    
+    
+    <a href="/2016/01/31/珠海冬天的雨/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
+<section id="comment">
+ <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="/2016/03/24/权限管理的设计/" data-title="" data-url=""></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"clkbkb"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+</section>
+
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:cxt.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/redis/">redis</a><small>2</small></li>
+  
+    <li><a href="/categories/系统设计/数据库架构/">数据库架构</a><small>1</small></li>
+  
+    <li><a href="/categories/生活感悟/">生活感悟</a><small>2</small></li>
+  
+    <li><a href="/categories/系统设计/">系统设计</a><small>3</small></li>
+  
+    <li><a href="/categories/redis/缓存/">缓存</a><small>2</small></li>
+  
+    <li><a href="/categories/计划/">计划</a><small>1</small></li>
+  
+    <li><a href="/categories/负载均衡/">负载均衡</a><small>1</small></li>
+  
+    <li><a href="/categories/负载均衡/高可用/">高可用</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+  </div>
+</div>
+
+
+  <div class="widget tag">
+<h3 class="title">个人简介</h3>
+<ul class="entry">
+<li><b>运动与文艺的程序猿一枚</b></li>
+<li>java服务端,熟悉相关后台技术</li>
+<li>毕业于广东工业大学</li>
+<li>邮箱：clkbk@gmail.com</li>
+<li>QQ与微信：940300313</li>
+</ul>
+</div>
+
+  <div class="widget tag">
+<h3 class="title">微信二维码</h3>
+<ul class="entry">
+<li>微信扫扫，添加好友，从此不寂寞</li>
+<li><a href="http://7s1ri4.com1.z0.glb.clouddn.com/660640562045536355.jpg" title="" class="fancybox" rel="gallery3"><img width="100%" src="http://7s1ri4.com1.z0.glb.clouddn.com/660640562045536355.jpg"></a></li>
+</ul>
+</div>
+
+  <div class="widget tag">
+<h3 class="title">我的關注</h3>
+<ul class="entry">
+<li><a href="http://dongxicheng.org/">董西成的博客</a></li>
+<li><a href="http://rednaxelafx.iteye.com/">R大的VM博客</a></li>
+<li><a href="http://blog.csdn.net/v_july_v">July的算法博客</a></li>
+<li><a href="https://github.com/julycoding/The-Art-Of-Programming-By-July/blob/master/ebook/zh/Readme.md">July的编程艺术GitHub</a></li>
+<li><a href="http://hllvm.group.iteye.com/">HLVMGroup</a></li>
+<li><a href="http://daiziguizhong.qiniudn.com/category.html">待字闺中</a> </li>
+<li><a href="http://coolshell.cn/">耗子叔的酷壳</a></li>
+<li><a href="http://ifeve.com/">并发编程网</a></li>
+<li><a href="http://zh.lucida.me/">Lucida</a></li>
+<li><a href="http://blog.yufeng.info/">余峰</a></li>
+<li><a href="http://it.deepinmind.com">花名有孚</a></li>
+<li><a href="http://zipperary.com/" title="Zippera's Blog">Zippera</a></li>
+</ul>
+</div>
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 cxt
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
