@@ -214,34 +214,53 @@
     </header>
     <div class="entry">
       
-        <p><img src="http://cxtblog.qiniudn.com/run.jpg" alt=""><br>今天我们来说一下一般互联网的的数据库的问题，以及随着业务发展的对应的一些常见的解决方案。<br><a id="more"></a></p>
-<h1 id="常见数据库架构">常见数据库架构</h1><ol>
-<li><p><strong>一主多从</strong>（读写分离，master负责写的操作，多台slave做读的操作）<br><img src="http://cxtblog.qiniudn.com/%E4%B8%80%20%E4%B8%BB%E5%A4%9A%E4%BB%8E.png" alt=""><br>大部分互联网公司都是采用这样的数据库架构，这样的架构的优点就是容易提高读的性能（通过增加读库），缺点就是写库存在单点故障，读库越多的话，主从同步的时间就越长，存在不一致的窗口就越长。对于大部分互联网业务来说都是<strong>读多写少</strong>的逻辑，这种架构是非常适合的。魅族现在大部分业务用的就是这样的一种架构。</p>
+        <p><img src="http://cxtblog.qiniudn.com/run.jpg" alt="">
+今天我们来说一下一般互联网的的数据库的问题，以及随着业务发展的对应的一些常见的解决方案。</p>
+<a id="more"></a>
+<h1>常见数据库架构</h1>
+<ol>
+<li>
+<p><strong>一主多从</strong>（读写分离，master负责写的操作，多台slave做读的操作）
+<img src="http://cxtblog.qiniudn.com/%E4%B8%80%20%E4%B8%BB%E5%A4%9A%E4%BB%8E.png" alt="">
+大部分互联网公司都是采用这样的数据库架构，这样的架构的优点就是容易提高读的性能（通过增加读库），缺点就是写库存在单点故障，读库越多的话，主从同步的时间就越长，存在不一致的窗口就越长。对于大部分互联网业务来说都是<strong>读多写少</strong>的逻辑，这种架构是非常适合的。魅族现在大部分业务用的就是这样的一种架构。</p>
 </li>
-<li><p><strong>双主做主从</strong>（就是读写都在master，另外一台做standby高可用）<br><img src="http://cxtblog.qiniudn.com/%E5%8F%8C%E4%B8%BB%E9%AB%98%E5%8F%AF%E7%94%A8.png" alt=""><br>读写都在主库，然后加一台standby做高可用，这样的结构的优点就是读写都在同一台机器，避免了数据不一致的情况，缺点很明显，没办法扩展读性能。<br>我重点说一句：<strong>并没有最优的架构，只有适合的架构！</strong>如果有最优的架构直接用最优的架构就行，其他的架构就没必要存在了。</p>
+<li>
+<p><strong>双主做主从</strong>（就是读写都在master，另外一台做standby高可用）
+<img src="http://cxtblog.qiniudn.com/%E5%8F%8C%E4%B8%BB%E9%AB%98%E5%8F%AF%E7%94%A8.png" alt="">
+读写都在主库，然后加一台standby做高可用，这样的结构的优点就是读写都在同一台机器，避免了数据不一致的情况，缺点很明显，没办法扩展读性能。
+我重点说一句：**并没有最优的架构，只有适合的架构！**如果有最优的架构直接用最优的架构就行，其他的架构就没必要存在了。</p>
 </li>
-<li><p><strong>双主多从</strong>（写库做高可用，多台读）</p>
+<li>
+<p><strong>双主多从</strong>（写库做高可用，多台读）</p>
 </li>
 </ol>
-<p><img src="http://cxtblog.qiniudn.com/%E5%A4%9A%E5%8F%B0%E5%86%99.png" alt=""><br>在一主多从的架构上，为了主库的高可用引入了另一台写的主库，这个比较蛋疼，<strong>为了1%的主库挂掉的可能而引入了80%的复杂性</strong>。双写库带来的问题有同步延迟，数据不一致的情况，如果同一张的表的Id是自增的有可能导致Id一样带来dulipcate key错误（可以用全局唯一ID中间件来生成ID，或者两个库的自增ID的步长不一样的）。事实上双主多从的这种结构带来的复杂性多多，对业务的快速迭代也有诸多不利，不建议使用。</p>
-<h1 id="数据架构优化的顺序">数据架构优化的顺序</h1><ol>
+<p><img src="http://cxtblog.qiniudn.com/%E5%A4%9A%E5%8F%B0%E5%86%99.png" alt="">
+在一主多从的架构上，为了主库的高可用引入了另一台写的主库，这个比较蛋疼，<strong>为了1%的主库挂掉的可能而引入了80%的复杂性</strong>。双写库带来的问题有同步延迟，数据不一致的情况，如果同一张的表的Id是自增的有可能导致Id一样带来dulipcate key错误（可以用全局唯一ID中间件来生成ID，或者两个库的自增ID的步长不一样的）。事实上双主多从的这种结构带来的复杂性多多，对业务的快速迭代也有诸多不利，不建议使用。</p>
+<h1>数据架构优化的顺序</h1>
+<ol>
 <li><strong>第一优化你的SQL以及索引</strong></li>
 <li><strong>第二就是加缓存，Redis，Memcache</strong></li>
 <li><strong>读写分离，增加读库数量以提高读性能</strong></li>
 <li><strong>垂直拆分</strong></li>
 <li><strong>水平拆分</strong></li>
 </ol>
-<h2 id="第一优化你的SQL以及索引">第一优化你的SQL以及索引</h2><p>首先，为了提高数据库的读写性能，不要一上来就想各种拆分，首先当然是先优化的SQL，数据库<strong>只负责简单的增删查改</strong>，把复杂的操作丢给service层。有些字段有必要冗余就冗余不要做大表join操作，以空间换时间。</p>
+<p>##第一优化你的SQL以及索引##
+首先，为了提高数据库的读写性能，不要一上来就想各种拆分，首先当然是先优化的SQL，数据库<strong>只负责简单的增删查改</strong>，把复杂的操作丢给service层。有些字段有必要冗余就冗余不要做大表join操作，以空间换时间。</p>
 <p>索引也不是越多越好，根据业务的需要，创建合理的索引。有时索引也会降低性能的，比如在写库创建索引，每插入一条记录，索引就要重建，这样的话反而降低了效率，所以针对不停的读写库，建立索引也要有策略。<strong>不同的库建立不同的索引，写库可以不建索引，给外网接口的读库的索引尽量少而准，运营后台的读库可以根据查询需要建多个索引</strong></p>
-<h2 id="加缓存">加缓存</h2><p>缓存是个万精油啊，热数据放在缓存里面，Redis的GET操作在一般的key-val长度的QPS已经达到5W+。缓存确实是提高性能的万精油。<br>加入缓存当然会引入一些新的问题：</p>
+<h2 id="加缓存"><a class="header-anchor" href="#加缓存">¶</a>加缓存</h2>
+<p>缓存是个万精油啊，热数据放在缓存里面，Redis的GET操作在一般的key-val长度的QPS已经达到5W+。缓存确实是提高性能的万精油。
+加入缓存当然会引入一些新的问题：</p>
 <ul>
 <li>更新操作是先淘汰缓存还是新更新数据，可以肯定的说：必须是<strong>先淘汰缓存，再更新数据库</strong>，为什么呢，为了避免如果更新数据库成功，但是淘汰缓存失败带来的脏数据。</li>
 <li><strong>主从缓存不一致</strong> 当更新主库的数据库和缓存时，由于从库同步需要时间的。所以从库读到旧的数据会重新入到缓存里面，这时就出现了脏数据。解决这个问题的做法就是：<strong>缓存双淘汰，设置缓存过期时间</strong>。</li>
 <li><strong>缓存双淘汰，设置缓存过期时间</strong>缓存双淘汰在淘汰第一次的之后，发送一个MQ消息在同步的时间窗口结束之后再一次淘汰一下缓存。这样就不会出现脏数据。当然如果可以容忍在一定时间期内读到脏数据的话，我们可以通过设置过期时间来淘汰缓存，事实上这种做法是非常可取的，大部分互联网业务也是可以容忍在一定时间期限读到旧数据的。</li>
 </ul>
-<h2 id="读写分离">读写分离</h2><p>读写分离这种很常见，为了提高读的性能冗余写库。</p>
-<h2 id="垂直拆分">垂直拆分</h2><p>当业务发展到一定的程度的话，用户量上去的时候，我们就有必要对业务进行拆分了。业务的垂直拆分当然涉及到数据库的拆分：数据库的表拆分成不同数据库的表分配到不同的业务，同一个表的字段拆分成不同的表分配到不同的业务。</p>
-<h2 id="水平拆分">水平拆分</h2><p>当一个表记录达到千万，亿级别的时候，就有必要进行水平拆分，水平拆分可以是分表或者是分库。但是最重要的是还是在sharding的时候选择合适的key用来分库分表，由于水平分片，查询这一块就更讲究技巧，不同逻辑可能查询同一张表的维度是不一样的，这时分表分库之前用来sharding的库就不一定是适合的，所以还是那个做法<strong>空间换时间</strong>，通过用不同的sharding的key来分库分表，不同维度的数据冗余，方便不同业务逻辑的需要。</p>
+<h2 id="读写分离"><a class="header-anchor" href="#读写分离">¶</a>读写分离</h2>
+<p>读写分离这种很常见，为了提高读的性能冗余写库。</p>
+<h2 id="垂直拆分"><a class="header-anchor" href="#垂直拆分">¶</a>垂直拆分</h2>
+<p>当业务发展到一定的程度的话，用户量上去的时候，我们就有必要对业务进行拆分了。业务的垂直拆分当然涉及到数据库的拆分：数据库的表拆分成不同数据库的表分配到不同的业务，同一个表的字段拆分成不同的表分配到不同的业务。</p>
+<h2 id="水平拆分"><a class="header-anchor" href="#水平拆分">¶</a>水平拆分</h2>
+<p>当一个表记录达到千万，亿级别的时候，就有必要进行水平拆分，水平拆分可以是分表或者是分库。但是最重要的是还是在sharding的时候选择合适的key用来分库分表，由于水平分片，查询这一块就更讲究技巧，不同逻辑可能查询同一张表的维度是不一样的，这时分表分库之前用来sharding的库就不一定是适合的，所以还是那个做法<strong>空间换时间</strong>，通过用不同的sharding的key来分库分表，不同维度的数据冗余，方便不同业务逻辑的需要。</p>
 
       
     </div>
@@ -324,7 +343,7 @@ var duoshuoQuery = {short_name:"clkbkb"};
   
     <li><a href="/categories/redis/缓存/">缓存</a><small>2</small></li>
   
-    <li><a href="/categories/计划/">计划</a><small>1</small></li>
+    <li><a href="/categories/计划/">计划</a><small>2</small></li>
   
     <li><a href="/categories/负载均衡/">负载均衡</a><small>1</small></li>
   
@@ -338,7 +357,7 @@ var duoshuoQuery = {short_name:"clkbkb"};
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 

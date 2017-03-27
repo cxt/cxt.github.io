@@ -214,14 +214,28 @@
     </header>
     <div class="entry">
       
-        <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/84d0165d7848837282bb7c551cf3c87e_b.jpg" alt=""><br><a id="more"></a></p>
-<h1 id="LVS（Linux_Virtual_Server）">LVS（Linux Virtual Server）</h1><h2 id="Network_address_translation(NAT)_网络地址转换">Network address translation(NAT) 网络地址转换</h2><p>NAT模式：通过LVS的时候将请求报文的virtual IP Address地址改写成选择服务器的地址，然后传给实际服务器；目标服务器处理之后将响应的报文传给LVS；LVS修改为报文的相应地址为virtual IP address。<br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-nat.jpg" alt=""></p>
-<h2 id="IP_Tunneling(TUN)_IP隧道">IP Tunneling(TUN) IP隧道</h2><p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-tun.jpg" alt=""></p>
-<p>TUN模式：选择一台服务器，将报文封装在另一个IP里面，转发给选择的服务器；服务器解封发现VIP是配置在本地IP隧道，处理这个请求，然后<strong>直接返回给用户</strong>。<br>具体过程如下图：<br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-tun-flow.jpg" alt=""></p>
-<h2 id="Direct_routing(DR)直接路由">Direct routing(DR)直接路由</h2><p><strong>目前项目用的正是DR模式！！！</strong><br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-dr.jpg" alt=""><br>DR模式：和IP隧道类似，选择一台服务器，将请求报文的mac地址更改为选择的服务器的mac地址，直接转发，服务器发现VIP的本地局域网的虚拟IP;处理完报文之后,将结果直接返回给用户。<br>过程如下图：<br><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-dr-flow.jpg" alt=""></p>
-<h2 id="三种模式的对比">三种模式的对比</h2><p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-thr-cmp.jpg" alt=""></p>
+        <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/84d0165d7848837282bb7c551cf3c87e_b.jpg" alt=""></p>
+<a id="more"></a>
+<h1>LVS（Linux Virtual Server）</h1>
+<h2 id="network-address-translation-nat-网络地址转换"><a class="header-anchor" href="#network-address-translation-nat-网络地址转换">¶</a>Network address translation(NAT) 网络地址转换</h2>
+<p>NAT模式：通过LVS的时候将请求报文的virtual IP Address地址改写成选择服务器的地址，然后传给实际服务器；目标服务器处理之后将响应的报文传给LVS；LVS修改为报文的相应地址为virtual IP address。
+<img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-nat.jpg" alt=""></p>
+<h2 id="ip-tunneling-tun-ip隧道"><a class="header-anchor" href="#ip-tunneling-tun-ip隧道">¶</a>IP Tunneling(TUN) IP隧道</h2>
+<p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-tun.jpg" alt=""></p>
+<p>TUN模式：选择一台服务器，将报文封装在另一个IP里面，转发给选择的服务器；服务器解封发现VIP是配置在本地IP隧道，处理这个请求，然后<strong>直接返回给用户</strong>。
+具体过程如下图：
+<img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-tun-flow.jpg" alt=""></p>
+<h2 id="direct-routing-dr-直接路由"><a class="header-anchor" href="#direct-routing-dr-直接路由">¶</a>Direct routing(DR)直接路由</h2>
+<p><strong>目前项目用的正是DR模式！！！</strong>
+<img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-dr.jpg" alt="">
+DR模式：和IP隧道类似，选择一台服务器，将请求报文的mac地址更改为选择的服务器的mac地址，直接转发，服务器发现VIP的本地局域网的虚拟IP;处理完报文之后,将结果直接返回给用户。
+过程如下图：
+<img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-dr-flow.jpg" alt=""></p>
+<h2 id="三种模式的对比"><a class="header-anchor" href="#三种模式的对比">¶</a>三种模式的对比</h2>
+<p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-thr-cmp.jpg" alt=""></p>
 <p>在服务器量的支持中，可以看出NAT模式支持的机器明显低于其他两种模式（NAT模式性能消耗较大：因为请求和响应都要经过LVS）。</p>
-<h1 id="Keepalived">Keepalived</h1>
+<h1>Keepalived</h1>
+
       
     </div>
     <footer>
@@ -303,7 +317,7 @@ var duoshuoQuery = {short_name:"clkbkb"};
   
     <li><a href="/categories/redis/缓存/">缓存</a><small>2</small></li>
   
-    <li><a href="/categories/计划/">计划</a><small>1</small></li>
+    <li><a href="/categories/计划/">计划</a><small>2</small></li>
   
     <li><a href="/categories/负载均衡/">负载均衡</a><small>1</small></li>
   
@@ -317,7 +331,7 @@ var duoshuoQuery = {short_name:"clkbkb"};
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 
