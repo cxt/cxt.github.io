@@ -222,10 +222,10 @@
 </ul>
 <p>基本方法：</p>
 <ul>
-<li>add(E)😮(1),内部数组扩容的话会是O(N)</li>
-<li>add(int,E)😮(N)</li>
+<li>add(E)：O(1),内部数组扩容的话会是O(N)</li>
+<li>add(int,E)：O(N)</li>
 <li>get(int)：O(N)</li>
-<li>remove(int)😮(N)，会移动数组</li>
+<li>remove(int)：O(N)，会移动数组</li>
 <li>remove(Object)：O(N),会移动数组</li>
 </ul>
 <p>使用：</p>
@@ -251,14 +251,14 @@
 <p>特性：</p>
 <ul>
 <li>用数组来做哈希表，初始大小为16</li>
-<li>发生hash冲突时，会以列表的形式存储，当冲突超过8个，==<strong>会以红黑树来存储（jdk1.8新属性）</strong>==</li>
+<li>发生hash冲突时，会以列表的形式存储，当冲突超过8个，==** 会以红黑树来存储（jdk1.8新属性）**==</li>
 <li>如果HashMap的大小超过负载因子（默认是3/4）,就会resize为原来的2倍</li>
-<li>resize的时候，bucket&lt;&lt;1（原来的2倍），冲突的元素要么在原来的位置，要么是原来移动2次幂（==<strong>减少重新计算hash</strong>值==）</li>
+<li>resize的时候，bucket&lt;&lt;1（原来的2倍），冲突的元素要么在原来的位置，要么是原来移动2次幂（ ==** 减少重新计算hash值 **==）</li>
 </ul>
 <p>使用：</p>
 <ul>
 <li>尽量在初始化时就指定容量</li>
-<li>==<strong>并发环境千万不要用HashMap,会出现死循环，请用并发集合ConcurrentHashMap</strong>==</li>
+<li>==** 并发环境千万不要用HashMap,会出现死循环，请用并发集合ConcurrentHashMap **==</li>
 </ul>
 <h3 id="treemap"><a class="header-anchor" href="#treemap">¶</a>TreeMap</h3>
 <p>特性：</p>
