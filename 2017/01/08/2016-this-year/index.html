@@ -198,7 +198,25 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper"> <div class="alignright">
+ <a href="#" id="returnTop" 
+      style="text-decoration:none; bottom:-200px; position:fixed; text-align:center; width:16px; margin:10px;color:black;font-weight:bold;"
+      onclick="javascript:$('html, body').animate({scrollTop: 0}, {queue:false, duration:10});">↑返回顶部</a>
+ </div>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+</script>
+ <script type="text/javascript">
+ $(function(){
+     $(window).scroll(function () {
+         if ($(document).scrollTop() >= 100) {
+             $('#returnTop').animate({bottom: "105px"}, { queue: false, duration: 10 }); 
+         } else {
+             $('#returnTop').animate({bottom: "-200px"}, { queue: false, duration: 10 }); 
+         }   
+     }); 
+ }); 
+ </script>
+<article class="post">
   
   <div class="post-content">
     <header>
@@ -244,36 +262,6 @@
   </div>
 </article>
 
-
-
-  <nav id="pagination" >
-    
-    <a href="/2017/01/08/2017年.关键的一年.要做的事情/" class="alignleft prev" >上一页</a>
-    
-    
-    <a href="/2016/05/27/浅谈JAVA虚拟机/" class="alignright next" >下一页</a>
-    
-    <div class="clearfix"></div>
-</nav>
-<section id="comment">
- <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="/2017/01/08/2016-this-year/" data-title="" data-url=""></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"clkbkb"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->
-
-</section>
 
 
 
