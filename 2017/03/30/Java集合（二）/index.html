@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>并发集合 | CXT&#39;s Blog</title>
+  <title>JAVA集合（二）-并发集合 | CXT&#39;s Blog</title>
   <meta name="author" content="cxt">
   
   <meta name="description" content="¶ConcurrentHashMap
@@ -16,7 +16,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="并发集合"/>
+  <meta property="og:title" content="JAVA集合（二）-并发集合"/>
   <meta property="og:site_name" content="CXT&#39;s Blog"/>
 
   
@@ -209,11 +209,11 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2017-03-30T07:20:33.000Z"><a href="/2017/03/30/并发集合/">Mar 30 2017</a></time>
+        <time datetime="2017-03-30T07:20:33.000Z"><a href="/2017/03/30/Java集合（二）/">Mar 30 2017</a></time>
       
       
   
-    <h1 class="title">并发集合</h1>
+    <h1 class="title">JAVA集合（二）-并发集合</h1>
   
 
     </header>
@@ -226,7 +226,14 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph LR&#10;ConcurrentHashMap--&#62;Segment&#10;Segment--&#62;HashEntry&#25968;&#32452;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>写操作会对写入元素的</li>
+<li>put操作会对写入元素的进行hash值的计算，由hash值定位其所在的segment,然后对segment进行上锁再进行写操作</li>
+<li>get操作则不会上锁，由于count,value都定义为volatile(线程可见)，volatile字段的写入操作先于读操作，所以拿到的都是最新的.</li>
+</ul>
+<h2 id="copyonwritelist"><a class="header-anchor" href="#copyonwritelist">¶</a>CopyOnWriteList</h2>
+<ul>
+<li>写操作的时候会copy原来的数组，进行写操作,然后改引用的的指向</li>
+<li>只能做到数据最终一致性，不能做到强一致性</li>
+<li>用于读多写少的场景</li>
 </ul>
 
       
@@ -254,7 +261,7 @@
 </nav>
 <section id="comment">
  <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="/2017/03/30/并发集合/" data-title="" data-url=""></div>
+  <div class="ds-thread" data-thread-key="/2017/03/30/Java集合（二）/" data-title="" data-url=""></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

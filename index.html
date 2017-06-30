@@ -203,11 +203,11 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2017-03-30T07:20:33.000Z"><a href="/2017/03/30/并发集合/">Mar 30 2017</a></time>
+        <time datetime="2017-03-30T07:20:33.000Z"><a href="/2017/03/30/Java集合（二）/">Mar 30 2017</a></time>
       
       
   
-    <h1 class="title"><a href="/2017/03/30/并发集合/">并发集合</a></h1>
+    <h1 class="title"><a href="/2017/03/30/Java集合（二）/">JAVA集合（二）-并发集合</a></h1>
   
 
     </header>
@@ -220,7 +220,14 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph LR&#10;ConcurrentHashMap--&#62;Segment&#10;Segment--&#62;HashEntry&#25968;&#32452;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>写操作会对写入元素的</li>
+<li>put操作会对写入元素的进行hash值的计算，由hash值定位其所在的segment,然后对segment进行上锁再进行写操作</li>
+<li>get操作则不会上锁，由于count,value都定义为volatile(线程可见)，volatile字段的写入操作先于读操作，所以拿到的都是最新的.</li>
+</ul>
+<h2 id="copyonwritelist"><a class="header-anchor" href="#copyonwritelist">¶</a>CopyOnWriteList</h2>
+<ul>
+<li>写操作的时候会copy原来的数组，进行写操作,然后改引用的的指向</li>
+<li>只能做到数据最终一致性，不能做到强一致性</li>
+<li>用于读多写少的场景</li>
 </ul>
 
       
@@ -339,6 +346,40 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-01-08T08:37:51.000Z"><a href="/2017/01/08/2017年——关键的一年/">Jan 8 2017</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/01/08/2017年——关键的一年/">2017年——关键的一年</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-01-08T08:37:51.000Z"><a href="/2017/01/08/2017年.关键的一年.要做的事情/">Jan 8 2017</a></time>
       
       
@@ -412,40 +453,6 @@
 <h2 id="后话"><a class="header-anchor" href="#后话">¶</a>后话</h2>
 <p>最好希望自己能够逐渐安静下来，平静下来，calm down!!!😄😄😄</p>
 
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-01-08T08:37:51.000Z"><a href="/2017/01/08/2017年——关键的一年/">Jan 8 2017</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/01/08/2017年——关键的一年/">2017年——关键的一年</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
       
     </div>
     <footer>
