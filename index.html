@@ -253,6 +253,56 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-03-30T07:20:33.000Z"><a href="/2017/03/30/并发集合/">Mar 30 2017</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/30/并发集合/">JAVA集合（二）-并发集合</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="concurrenthashmap"><a class="header-anchor" href="#concurrenthashmap">¶</a>ConcurrentHashMap</h2>
+<ul>
+<li>并发的HashMap,避免HashMap在并发环境下产生死循环</li>
+<li>内部默认由16个Segment组成，每个segment内部有一个Entity数组，用来存放元素</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph LR&#10;ConcurrentHashMap--&#62;Segment&#10;Segment--&#62;HashEntry&#25968;&#32452;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>put操作会对写入元素的进行hash值的计算，由hash值定位其所在的segment,然后对segment进行上锁再进行写操作</li>
+<li>get操作则不会上锁，由于count,value都定义为volatile(线程可见)，volatile字段的写入操作先于读操作，所以拿到的都是最新的.</li>
+</ul>
+<h2 id="copyonwritelist"><a class="header-anchor" href="#copyonwritelist">¶</a>CopyOnWriteList</h2>
+<ul>
+<li>写操作的时候会copy原来的数组，进行写操作,然后改引用的的指向</li>
+<li>只能做到数据最终一致性，不能做到强一致性</li>
+<li>用于读多写少的场景</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-03-29T08:54:01.000Z"><a href="/2017/03/29/Java集合（一）/">Mar 29 2017</a></time>
       
       
@@ -291,10 +341,10 @@
 <p>基本方法：</p>
 <ul>
 <li>addFirst(E),addLast(E),add(E)：O(N)</li>
-<li>getFirst(),getLast()😮(1)</li>
+<li>getFirst(),getLast()：O(1)</li>
 <li>get(int):需要遍历，时间复杂度为O(N)</li>
-<li>removeFirst(),removeLast(),remove()😮(1)</li>
-<li>remove(E),remove(int)😮(N)</li>
+<li>removeFirst(),removeLast(),remove()：O(1)</li>
+<li>remove(E),remove(int)：O(N)</li>
 </ul>
 <h2 id="map"><a class="header-anchor" href="#map">¶</a>Map</h2>
 <h3 id="hashmap"><a class="header-anchor" href="#hashmap">¶</a>HashMap</h3>
@@ -323,40 +373,6 @@
 <li>其实就是集成了一个HashMap,key来存东西，value都设置为null</li>
 </ul>
 
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-01-08T08:37:51.000Z"><a href="/2017/01/08/2017年——关键的一年/">Jan 8 2017</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/01/08/2017年——关键的一年/">2017年——关键的一年</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
       
     </div>
     <footer>
@@ -722,7 +738,7 @@ CMS：老年代（mark-sweep）</li>
   
     <li><a href="/categories/JVM/">JVM</a><small>1</small></li>
   
-    <li><a href="/categories/Java/">Java</a><small>1</small></li>
+    <li><a href="/categories/Java/">Java</a><small>2</small></li>
   
     <li><a href="/categories/redis/">redis</a><small>2</small></li>
   
@@ -748,7 +764,7 @@ CMS：老年代（mark-sweep）</li>
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 
