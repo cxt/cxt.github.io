@@ -212,6 +212,23 @@ add(int,E)：O(N">
   
   <div class="post-content">
     <header>
+       <div class="alignright">
+ <a href="#" id="returnTop" 
+      style="text-decoration:none; bottom:-200px; position:fixed; text-align:center; width:14px; margin:8px;"
+      onclick="javascript:$('html, body').animate({scrollTop: 0}, {queue:false, duration:10});">↑回顶部</a>
+ </div>
+
+ <script type="text/javascript">
+ $(function(){
+     $(window).scroll(function () {
+         if ($(document).scrollTop() >= 100) {
+             $('#returnTop').animate({bottom: "105px"}, { queue: false, duration: 10 }); 
+         } else {
+             $('#returnTop').animate({bottom: "-200px"}, { queue: false, duration: 10 }); 
+         }   
+     }); 
+ }); 
+ </script>
       
         <div class="icon"></div>
         <time datetime="2017-03-29T08:54:01.000Z"><a href="/2017/03/29/Java集合（一）/">Mar 29 2017</a></time>
@@ -269,7 +286,7 @@ add(int,E)：O(N">
 <p>使用：</p>
 <ul>
 <li>尽量在初始化时就指定容量</li>
-<li>** 并发环境千万不要用HashMap,会出现死循环，请用并发集合ConcurrentHashMap **</li>
+<li><strong>并发环境千万不要用HashMap,会出现死循环，请用并发集合ConcurrentHashMap</strong></li>
 </ul>
 <h3 id="treemap"><a class="header-anchor" href="#treemap">¶</a>TreeMap</h3>
 <p>特性：</p>
