@@ -233,10 +233,29 @@
          <!--02-->
         <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java类加载的过程"><span class="toc-text">✔java类加载的过程</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java类加载的过程"><span class="toc-text">✔java类加载的过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类加载器"><span class="toc-text">✔类加载器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派模型"><span class="toc-text">✔双亲委派模型</span></a></li></ol></li></ol>
 </div>
       
         <h2 id="java类加载的过程"><a class="header-anchor" href="#java类加载的过程">✔</a>java类加载的过程</h2>
+<p><img src="http://cxtblog.qiniudn.com/%E7%B1%BB%E5%8A%A0%E8%BD%BD.png" alt="image"></p>
+<ul>
+<li>加载：java虚拟机加载二进制字节码流，产生的class对象存放在方法区中。</li>
+<li>验证：是否符合java虚拟机规范，主要验证：文件格式验证，元数据验证，字节码验证，符号引用验证。</li>
+<li>准备：将class对象的类变量(==static修饰的基本类型==（int,short,boolean等）)赋值为零值（0，0,false）,静态引用不在这个阶段赋值，在初始化阶段赋值（静态引用的对象在堆上面），如果是静态常量则赋值为ConstantValue(常量的值)</li>
+<li>解析：符号引用（符号标识）替换成直接引用（内存指向，指向目标的值）。</li>
+<li>初始化：执行类构造器<clinit>()方法的过程：静态变量赋值动作和静态语句块（static{}）的动作</clinit></li>
+<li>使用：实例化对象，方法调用等</li>
+<li>卸载：JVM回收类对象
+类加载都是在运行时进行的，java反射机制其实就是用到类加载的过程。</li>
+</ul>
+<h2 id="类加载器"><a class="header-anchor" href="#类加载器">✔</a>类加载器</h2>
+<p>JVM里面一共有下面这几种类加载器：Boostrap ClassLoader(C++写的ClassLoader，加载JAVA_HOME/lib的类),Extention ClassLoader(加载jre\lib\ext下面的类),Application ClassLoader（用户自己定义的类）以及用户自己定义的ClassLoader.
+<img src="http://cxtblog.qiniudn.com/classloader.png" alt="image"></p>
+<h3 id="双亲委派模型"><a class="header-anchor" href="#双亲委派模型">✔</a>双亲委派模型</h3>
+<ul>
+<li>类的唯一性是有类本身和类的类加载器确定的</li>
+<li>类加载的时候，都会尝试交给顶层的类加载器去加载，如果加载不了才会丢给下层的类加载器加载</li>
+</ul>
 
       
     </div>
@@ -415,7 +434,9 @@ s.setAttribute('data-timestamp', +new Date());
 <h3 id="arraylist"><a class="header-anchor" href="#arraylist">✔</a>ArrayList</h3>
 <p>特性：</p>
 <ul>
-<li>内部是一个数组，初始状态容易为10，数组，满了之后扩容（数组复制）为capacity+capacity&gt;&gt;1=1.5*capacity</li>
+<li>内部是一个数组，初始状态容易为10，
+数组满了之后扩容（数组复制），
+为capacity+capacity&gt;&gt;1=1.5*capacity</li>
 </ul>
 <p>基本方法：</p>
 <ul>
