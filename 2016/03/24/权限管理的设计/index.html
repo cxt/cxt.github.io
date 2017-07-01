@@ -234,13 +234,13 @@
          <!--02-->
         <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据库的设计"><span class="toc-text">¶1、	数据库的设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-权限控制处理"><span class="toc-text">¶2、	权限控制处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-性能优化"><span class="toc-text">¶3、性能优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-如何接入"><span class="toc-text">¶4、	如何接入</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据库的设计"><span class="toc-text">✔1、	数据库的设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-权限控制处理"><span class="toc-text">✔2、	权限控制处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-性能优化"><span class="toc-text">✔3、性能优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-如何接入"><span class="toc-text">✔4、	如何接入</span></a></li></ol>
 </div>
       
         <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/923876_798712953566533_1373700683_n.jpg" alt="">
 一个成熟的管理后台必须要有相应的权限控制进行访问限制，今天我就简单说一下我的一个权限控制的设计~</p>
 <a id="more"></a>
-<h2 id="1-数据库的设计"><a class="header-anchor" href="#1-数据库的设计">¶</a>1、	数据库的设计</h2>
+<h2 id="1-数据库的设计"><a class="header-anchor" href="#1-数据库的设计">✔</a>1、	数据库的设计</h2>
 <p>一般来说，有一定规模的管理系统要上管理权限的设计，就必须把权限和权限分配相关的内容存到<strong>数据库</strong>，小系统的话，存放在配置文件也是可以，但是系统一旦大了就难以维护，所以权限管理还是得存放在数据库里面。
 涉及的表一般有：</p>
 <ul>
@@ -254,7 +254,7 @@
 <strong>资源表</strong>存储相关的资源的CRUD的url资源。<strong>用户表</strong>存储用户信息。<strong>角色表</strong>存储权限的角色。<strong>角色</strong><strong>与资源关联表</strong>存储相关角色与相关资源的关联。 <strong>用户与角色关联表</strong>存储用户与相关角色的关联。</p>
 <p>表结构如下：</p>
 <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%BB%93%E6%9E%84.jpg" alt=""></p>
-<h2 id="2-权限控制处理"><a class="header-anchor" href="#2-权限控制处理">¶</a>2、	权限控制处理</h2>
+<h2 id="2-权限控制处理"><a class="header-anchor" href="#2-权限控制处理">✔</a>2、	权限控制处理</h2>
 <p>权限控制一般有两种方法，<strong>过滤器</strong>（Filter）过滤请求, <strong>拦截器</strong>（Interceptor）拦截请求。</p>
 <ol>
 <li>
@@ -269,7 +269,7 @@
 <p>我们将采用<strong>过滤器</strong>进行过滤处理，理由是过滤器处理比较简单，并且不用依赖于框架。</p>
 </li>
 </ol>
-<h2 id="3-性能优化"><a class="header-anchor" href="#3-性能优化">¶</a>3、性能优化</h2>
+<h2 id="3-性能优化"><a class="header-anchor" href="#3-性能优化">✔</a>3、性能优化</h2>
 <p>由于用户的请求都要经过过滤器或者拦截器的处理，每一次的处理都具有一定的时间和资源（查数据库等）的开销，所以如果请求量非常大的话，这时权限控制必然是系统的一个瓶颈。现在要做的优化工作主要还是上缓存。上缓存主要有两个级别的缓存。</p>
 <ul>
 <li>全局的缓存——也就是redis缓存，把权限信息放在redis里面。加快查询速度。</li>
@@ -277,7 +277,7 @@
 <ul>
 <li>会话级别的缓存——也就是同一个用户在登录期间对权限进行缓存，加快权限处理速度。</li>
 </ul>
-<h2 id="4-如何接入"><a class="header-anchor" href="#4-如何接入">¶</a>4、	如何接入</h2>
+<h2 id="4-如何接入"><a class="header-anchor" href="#4-如何接入">✔</a>4、	如何接入</h2>
 <p>因为权限控制处理这一块都是比较基础共通的，为了方便其他应用的快速方便地接入，接入只需要要做如下工作就行：</p>
 <ul>
 <li>在数据库,创建好相关的表(我这边提供表结构)。</li>
@@ -355,7 +355,7 @@ s.setAttribute('data-timestamp', +new Date());
   
     <li><a href="/categories/JVM/">JVM</a><small>1</small></li>
   
-    <li><a href="/categories/Java/">Java</a><small>1</small></li>
+    <li><a href="/categories/Java/">Java</a><small>3</small></li>
   
     <li><a href="/categories/redis/">redis</a><small>2</small></li>
   
@@ -381,7 +381,7 @@ s.setAttribute('data-timestamp', +new Date());
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 

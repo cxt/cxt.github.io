@@ -234,27 +234,27 @@
          <!--02-->
         <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">LVS（Linux Virtual Server）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#network-address-translation-nat-网络地址转换"><span class="toc-text">¶Network address translation(NAT) 网络地址转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ip-tunneling-tun-ip隧道"><span class="toc-text">¶IP Tunneling(TUN) IP隧道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#direct-routing-dr-直接路由"><span class="toc-text">¶Direct routing(DR)直接路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三种模式的对比"><span class="toc-text">¶三种模式的对比</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">Keepalived</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">LVS（Linux Virtual Server）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#network-address-translation-nat-网络地址转换"><span class="toc-text">✔Network address translation(NAT) 网络地址转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ip-tunneling-tun-ip隧道"><span class="toc-text">✔IP Tunneling(TUN) IP隧道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#direct-routing-dr-直接路由"><span class="toc-text">✔Direct routing(DR)直接路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三种模式的对比"><span class="toc-text">✔三种模式的对比</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">Keepalived</span></a></li></ol>
 </div>
       
         <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/84d0165d7848837282bb7c551cf3c87e_b.jpg" alt=""></p>
 <a id="more"></a>
 <h1>LVS（Linux Virtual Server）</h1>
-<h2 id="network-address-translation-nat-网络地址转换"><a class="header-anchor" href="#network-address-translation-nat-网络地址转换">¶</a>Network address translation(NAT) 网络地址转换</h2>
+<h2 id="network-address-translation-nat-网络地址转换"><a class="header-anchor" href="#network-address-translation-nat-网络地址转换">✔</a>Network address translation(NAT) 网络地址转换</h2>
 <p>NAT模式：通过LVS的时候将请求报文的virtual IP Address地址改写成选择服务器的地址，然后传给实际服务器；目标服务器处理之后将响应的报文传给LVS；LVS修改为报文的相应地址为virtual IP address。
 <img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-nat.jpg" alt=""></p>
-<h2 id="ip-tunneling-tun-ip隧道"><a class="header-anchor" href="#ip-tunneling-tun-ip隧道">¶</a>IP Tunneling(TUN) IP隧道</h2>
+<h2 id="ip-tunneling-tun-ip隧道"><a class="header-anchor" href="#ip-tunneling-tun-ip隧道">✔</a>IP Tunneling(TUN) IP隧道</h2>
 <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-tun.jpg" alt=""></p>
 <p>TUN模式：选择一台服务器，将报文封装在另一个IP里面，转发给选择的服务器；服务器解封发现VIP是配置在本地IP隧道，处理这个请求，然后<strong>直接返回给用户</strong>。
 具体过程如下图：
 <img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-tun-flow.jpg" alt=""></p>
-<h2 id="direct-routing-dr-直接路由"><a class="header-anchor" href="#direct-routing-dr-直接路由">¶</a>Direct routing(DR)直接路由</h2>
+<h2 id="direct-routing-dr-直接路由"><a class="header-anchor" href="#direct-routing-dr-直接路由">✔</a>Direct routing(DR)直接路由</h2>
 <p><strong>目前项目用的正是DR模式！！！</strong>
 <img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-dr.jpg" alt="">
 DR模式：和IP隧道类似，选择一台服务器，将请求报文的mac地址更改为选择的服务器的mac地址，直接转发，服务器发现VIP的本地局域网的虚拟IP;处理完报文之后,将结果直接返回给用户。
 过程如下图：
 <img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-dr-flow.jpg" alt=""></p>
-<h2 id="三种模式的对比"><a class="header-anchor" href="#三种模式的对比">¶</a>三种模式的对比</h2>
+<h2 id="三种模式的对比"><a class="header-anchor" href="#三种模式的对比">✔</a>三种模式的对比</h2>
 <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/vs-thr-cmp.jpg" alt=""></p>
 <p>在服务器量的支持中，可以看出NAT模式支持的机器明显低于其他两种模式（NAT模式性能消耗较大：因为请求和响应都要经过LVS）。</p>
 <h1>Keepalived</h1>
@@ -324,7 +324,7 @@ s.setAttribute('data-timestamp', +new Date());
   
     <li><a href="/categories/JVM/">JVM</a><small>1</small></li>
   
-    <li><a href="/categories/Java/">Java</a><small>1</small></li>
+    <li><a href="/categories/Java/">Java</a><small>3</small></li>
   
     <li><a href="/categories/redis/">redis</a><small>2</small></li>
   
@@ -350,7 +350,7 @@ s.setAttribute('data-timestamp', +new Date());
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 

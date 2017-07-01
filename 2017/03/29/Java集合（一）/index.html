@@ -7,8 +7,8 @@
   <meta name="author" content="cxt">
   
   <meta name="description" content="普通集合
-¶List
-¶ArrayList
+✔List
+✔ArrayList
 特性：
 
 内部是一个数组，初始状态容易为10，数组，满了之后扩容（数组复制）为capacity+capacity&amp;gt;&amp;gt;1=1.5*capacity
@@ -244,12 +244,12 @@ add(int,E)：O(N">
          <!--02-->
         <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">普通集合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#list"><span class="toc-text">¶List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#arraylist"><span class="toc-text">¶ArrayList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linkedlist"><span class="toc-text">¶LinkedList</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map"><span class="toc-text">¶Map</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hashmap"><span class="toc-text">¶HashMap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#treemap"><span class="toc-text">¶TreeMap</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-text">¶Set</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hashset"><span class="toc-text">¶HashSet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完"><span class="toc-text">¶完</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">普通集合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#list"><span class="toc-text">✔List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#arraylist"><span class="toc-text">✔ArrayList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linkedlist"><span class="toc-text">✔LinkedList</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map"><span class="toc-text">✔Map</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hashmap"><span class="toc-text">✔HashMap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#treemap"><span class="toc-text">✔TreeMap</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-text">✔Set</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hashset"><span class="toc-text">✔HashSet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完"><span class="toc-text">✔完</span></a></li></ol></li></ol>
 </div>
       
         <h1>普通集合</h1>
-<h2 id="list"><a class="header-anchor" href="#list">¶</a>List</h2>
-<h3 id="arraylist"><a class="header-anchor" href="#arraylist">¶</a>ArrayList</h3>
+<h2 id="list"><a class="header-anchor" href="#list">✔</a>List</h2>
+<h3 id="arraylist"><a class="header-anchor" href="#arraylist">✔</a>ArrayList</h3>
 <p>特性：</p>
 <ul>
 <li>内部是一个数组，初始状态容易为10，数组，满了之后扩容（数组复制）为capacity+capacity&gt;&gt;1=1.5*capacity</li>
@@ -266,7 +266,7 @@ add(int,E)：O(N">
 <ul>
 <li>尽量在初始化时就指定容量，这样有助于减小数组扩容带来的内存和CPU的损耗</li>
 </ul>
-<h3 id="linkedlist"><a class="header-anchor" href="#linkedlist">¶</a>LinkedList</h3>
+<h3 id="linkedlist"><a class="header-anchor" href="#linkedlist">✔</a>LinkedList</h3>
 <p>特性：</p>
 <ul>
 <li>一个双向链表，每个元素都有两个指向，一个指向前一个元素，一个指向后一个元素</li>
@@ -280,8 +280,8 @@ add(int,E)：O(N">
 <li>removeFirst(),removeLast(),remove()：O(1)</li>
 <li>remove(E),remove(int)：O(N)</li>
 </ul>
-<h2 id="map"><a class="header-anchor" href="#map">¶</a>Map</h2>
-<h3 id="hashmap"><a class="header-anchor" href="#hashmap">¶</a>HashMap</h3>
+<h2 id="map"><a class="header-anchor" href="#map">✔</a>Map</h2>
+<h3 id="hashmap"><a class="header-anchor" href="#hashmap">✔</a>HashMap</h3>
 <p>特性：</p>
 <ul>
 <li>用数组来做哈希表，初始大小为16</li>
@@ -294,19 +294,19 @@ add(int,E)：O(N">
 <li>尽量在初始化时就指定容量</li>
 <li><strong>并发环境千万不要用HashMap,会出现死循环，请用并发集合ConcurrentHashMap</strong></li>
 </ul>
-<h3 id="treemap"><a class="header-anchor" href="#treemap">¶</a>TreeMap</h3>
+<h3 id="treemap"><a class="header-anchor" href="#treemap">✔</a>TreeMap</h3>
 <p>特性：</p>
 <ul>
 <li>红黑树实现，是一种自平衡二叉树</li>
 <li>查询，插入都是LOG(N)</li>
 </ul>
-<h2 id="set"><a class="header-anchor" href="#set">¶</a>Set</h2>
-<h3 id="hashset"><a class="header-anchor" href="#hashset">¶</a>HashSet</h3>
+<h2 id="set"><a class="header-anchor" href="#set">✔</a>Set</h2>
+<h3 id="hashset"><a class="header-anchor" href="#hashset">✔</a>HashSet</h3>
 <p>特性：</p>
 <ul>
 <li>其实就是集成了一个HashMap,key来存东西，value都设置为null</li>
 </ul>
-<h2 id="完"><a class="header-anchor" href="#完">¶</a>完</h2>
+<h2 id="完"><a class="header-anchor" href="#完">✔</a>完</h2>
 
       
     </div>
@@ -373,7 +373,7 @@ s.setAttribute('data-timestamp', +new Date());
   
     <li><a href="/categories/JVM/">JVM</a><small>1</small></li>
   
-    <li><a href="/categories/Java/">Java</a><small>1</small></li>
+    <li><a href="/categories/Java/">Java</a><small>3</small></li>
   
     <li><a href="/categories/redis/">redis</a><small>2</small></li>
   
@@ -399,7 +399,7 @@ s.setAttribute('data-timestamp', +new Date());
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 

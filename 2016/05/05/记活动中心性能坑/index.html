@@ -234,7 +234,7 @@
          <!--02-->
         <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">出现的问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">现阶段活动中心的架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">业务场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">处理方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实时问题的处理"><span class="toc-text">¶实时问题的处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后期的优化"><span class="toc-text">¶后期的优化</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">出现的问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">现阶段活动中心的架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">业务场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">处理方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实时问题的处理"><span class="toc-text">✔实时问题的处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后期的优化"><span class="toc-text">✔后期的优化</span></a></li></ol></li></ol>
 </div>
       
         <p>** 今天是立夏,有点燥热的天气，备上一杯清茶，来细细分析一下。 **</p>
@@ -278,13 +278,13 @@
 <p>我的做法是用户每次抽奖将用户的ID作为key记录到redis里面，5秒之后过期，如果redis查询到说明用户5秒被已经抽过奖所以不能再抽一次，要等到redis里面的key过期才能抽奖。</p>
 <p>然而由于上述的** 数据库架构 <strong>，</strong> 表没加索引 <strong>，</strong> 用户相关数据没有大量使用缓存 **导致出现性能的问题。</p>
 <h1>处理方法</h1>
-<h2 id="实时问题的处理"><a class="header-anchor" href="#实时问题的处理">¶</a>实时问题的处理</h2>
+<h2 id="实时问题的处理"><a class="header-anchor" href="#实时问题的处理">✔</a>实时问题的处理</h2>
 <ul>
 <li>由于这次是由于大量推送，导致参加的用户过多，所以当时马上停止用户消息推送。</li>
 <li>马上定位问题所在，通过查看服务器的负载情况，发现服务器负载正常，然后赶紧联系DBA查看DB的负载情况，定位到慢SQL，赶紧加上索引。</li>
 <li>运营安抚用户的情绪。</li>
 </ul>
-<h2 id="后期的优化"><a class="header-anchor" href="#后期的优化">¶</a>后期的优化</h2>
+<h2 id="后期的优化"><a class="header-anchor" href="#后期的优化">✔</a>后期的优化</h2>
 <ul>
 <li>** 数据库架构的调整 <strong>：由于业务场景读多写少，采用</strong> 一主多从 **的数据库结构比较适合。</li>
 <li>** 数据表的水平拆分 **：用户数据表进行分库或者分表。</li>
@@ -358,7 +358,7 @@ s.setAttribute('data-timestamp', +new Date());
   
     <li><a href="/categories/JVM/">JVM</a><small>1</small></li>
   
-    <li><a href="/categories/Java/">Java</a><small>1</small></li>
+    <li><a href="/categories/Java/">Java</a><small>3</small></li>
   
     <li><a href="/categories/redis/">redis</a><small>2</small></li>
   
@@ -384,7 +384,7 @@ s.setAttribute('data-timestamp', +new Date());
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 

@@ -234,7 +234,7 @@
          <!--02-->
         <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">常见数据库架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">数据架构优化的顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#加缓存"><span class="toc-text">¶加缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读写分离"><span class="toc-text">¶读写分离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直拆分"><span class="toc-text">¶垂直拆分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#水平拆分"><span class="toc-text">¶水平拆分</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">常见数据库架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">数据架构优化的顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#加缓存"><span class="toc-text">✔加缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读写分离"><span class="toc-text">✔读写分离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直拆分"><span class="toc-text">✔垂直拆分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#水平拆分"><span class="toc-text">✔水平拆分</span></a></li></ol></li></ol>
 </div>
       
         <p><img src="http://cxtblog.qiniudn.com/run.jpg" alt="">
@@ -270,7 +270,7 @@
 <p>##第一优化你的SQL以及索引##
 首先，为了提高数据库的读写性能，不要一上来就想各种拆分，首先当然是先优化的SQL，数据库<strong>只负责简单的增删查改</strong>，把复杂的操作丢给service层。有些字段有必要冗余就冗余不要做大表join操作，以空间换时间。</p>
 <p>索引也不是越多越好，根据业务的需要，创建合理的索引。有时索引也会降低性能的，比如在写库创建索引，每插入一条记录，索引就要重建，这样的话反而降低了效率，所以针对不停的读写库，建立索引也要有策略。<strong>不同的库建立不同的索引，写库可以不建索引，给外网接口的读库的索引尽量少而准，运营后台的读库可以根据查询需要建多个索引</strong></p>
-<h2 id="加缓存"><a class="header-anchor" href="#加缓存">¶</a>加缓存</h2>
+<h2 id="加缓存"><a class="header-anchor" href="#加缓存">✔</a>加缓存</h2>
 <p>缓存是个万精油啊，热数据放在缓存里面，Redis的GET操作在一般的key-val长度的QPS已经达到5W+。缓存确实是提高性能的万精油。
 加入缓存当然会引入一些新的问题：</p>
 <ul>
@@ -278,11 +278,11 @@
 <li><strong>主从缓存不一致</strong> 当更新主库的数据库和缓存时，由于从库同步需要时间的。所以从库读到旧的数据会重新入到缓存里面，这时就出现了脏数据。解决这个问题的做法就是：<strong>缓存双淘汰，设置缓存过期时间</strong>。</li>
 <li><strong>缓存双淘汰，设置缓存过期时间</strong>缓存双淘汰在淘汰第一次的之后，发送一个MQ消息在同步的时间窗口结束之后再一次淘汰一下缓存。这样就不会出现脏数据。当然如果可以容忍在一定时间期内读到脏数据的话，我们可以通过设置过期时间来淘汰缓存，事实上这种做法是非常可取的，大部分互联网业务也是可以容忍在一定时间期限读到旧数据的。</li>
 </ul>
-<h2 id="读写分离"><a class="header-anchor" href="#读写分离">¶</a>读写分离</h2>
+<h2 id="读写分离"><a class="header-anchor" href="#读写分离">✔</a>读写分离</h2>
 <p>读写分离这种很常见，为了提高读的性能冗余写库。</p>
-<h2 id="垂直拆分"><a class="header-anchor" href="#垂直拆分">¶</a>垂直拆分</h2>
+<h2 id="垂直拆分"><a class="header-anchor" href="#垂直拆分">✔</a>垂直拆分</h2>
 <p>当业务发展到一定的程度的话，用户量上去的时候，我们就有必要对业务进行拆分了。业务的垂直拆分当然涉及到数据库的拆分：数据库的表拆分成不同数据库的表分配到不同的业务，同一个表的字段拆分成不同的表分配到不同的业务。</p>
-<h2 id="水平拆分"><a class="header-anchor" href="#水平拆分">¶</a>水平拆分</h2>
+<h2 id="水平拆分"><a class="header-anchor" href="#水平拆分">✔</a>水平拆分</h2>
 <p>当一个表记录达到千万，亿级别的时候，就有必要进行水平拆分，水平拆分可以是分表或者是分库。但是最重要的是还是在sharding的时候选择合适的key用来分库分表，由于水平分片，查询这一块就更讲究技巧，不同逻辑可能查询同一张表的维度是不一样的，这时分表分库之前用来sharding的库就不一定是适合的，所以还是那个做法<strong>空间换时间</strong>，通过用不同的sharding的key来分库分表，不同维度的数据冗余，方便不同业务逻辑的需要。</p>
 
       
@@ -350,7 +350,7 @@ s.setAttribute('data-timestamp', +new Date());
   
     <li><a href="/categories/JVM/">JVM</a><small>1</small></li>
   
-    <li><a href="/categories/Java/">Java</a><small>1</small></li>
+    <li><a href="/categories/Java/">Java</a><small>3</small></li>
   
     <li><a href="/categories/redis/">redis</a><small>2</small></li>
   
@@ -376,7 +376,7 @@ s.setAttribute('data-timestamp', +new Date());
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 
