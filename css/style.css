@@ -690,6 +690,21 @@ article footer .addthis iframe {
   margin-right: 10px;
   display: inline-block;
 }
+.archive-list {
+  font-size: 0.9em;
+  padding: 15px 20px;
+}
+.archive-list .archive-list-count {
+  margin-left: 8px;
+  font-size: 0.8em;
+  color: #999;
+}
+.archive-list .archive-list-count:before {
+  content: '(';
+}
+.archive-list .archive-list-count:after {
+  content: ')';
+}
 #footer {
   color: #999;
   margin-bottom: 50px;
