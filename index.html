@@ -245,9 +245,9 @@
 <li>解析：符号引用（符号标识）替换成直接引用（内存指向，指向目标的值）。</li>
 <li>初始化：执行类构造器<clinit>()方法的过程：静态变量赋值动作和静态语句块（static{}）的动作</clinit></li>
 <li>使用：实例化对象，方法调用等</li>
-<li>卸载：JVM回收类对象
-类加载都是在运行时进行的，java反射机制其实就是用到类加载的过程。</li>
+<li>卸载：JVM回收类对象</li>
 </ul>
+<p><strong>类加载都是在运行时进行的，java反射机制其实就是用到类加载的过程。</strong></p>
 <h2 id="类加载器"><a class="header-anchor" href="#类加载器">✔</a>类加载器</h2>
 <p>JVM里面一共有下面这几种类加载器：Boostrap ClassLoader(C++写的ClassLoader，加载JAVA_HOME/lib的类),Extention ClassLoader(加载jre\lib\ext下面的类),Application ClassLoader（用户自己定义的类）以及用户自己定义的ClassLoader.
 <img src="http://cxtblog.qiniudn.com/classloader.png" alt="image"></p>
@@ -255,6 +255,126 @@
 <ul>
 <li>类的唯一性是有类本身和类的类加载器确定的</li>
 <li>类加载的时候，都会尝试交给顶层的类加载器去加载，如果加载不了才会丢给下层的类加载器加载</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+    </footer>
+  </div>
+</article>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://cxt-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+
+
+
+
+
+   <div class="alignright">
+ <a href="#" id="returnTop" 
+      style="text-decoration:none; bottom:-200px; position:fixed; text-align:center; width:16px; margin:10px;color:black;font-weight:bold;"
+      onclick="javascript:$('html, body').animate({scrollTop: 0}, {queue:false, duration:10});">↑返回顶部</a>
+ </div>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+</script>
+ <script type="text/javascript">
+ $(function(){
+     $(window).scroll(function () {
+         if ($(document).scrollTop() >= 100) {
+             $('#returnTop').animate({bottom: "105px"}, { queue: false, duration: 10 }); 
+         } else {
+             $('#returnTop').animate({bottom: "-200px"}, { queue: false, duration: 10 }); 
+         }   
+     }); 
+ }); 
+ </script>
+<article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-04-11T14:13:17.000Z"><a href="/2017/04/11/记虎牙视频弹幕JVM故障排查与解决/">Apr 11 2017</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/04/11/记虎牙视频弹幕JVM故障排查与解决/">记虎牙视频弹幕JVM故障排查与解决</a></h1>
+  
+
+    </header>
+     <div class="entry">
+         <!--02-->
+        <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-text">✔背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排查"><span class="toc-text">✔排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-text">✔解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#教训"><span class="toc-text">✔教训</span></a></li></ol>
+</div>
+      
+        <h2 id="背景"><a class="header-anchor" href="#背景">✔</a>背景</h2>
+<p>3月份在做一个虎牙视频弹幕的项目，完成设计和开发后进行功能测试没有什么问题，因为这个项目弹幕的获取和新增都是去调用虎牙那边的thrift服务，压力主要还是在他们那边，加之产品经理着急项目赶紧上线，所有没有进行压力测试，功能测试OK了就赶紧发布了。</p>
+<p>项目上线进行一些功能回归测试是没有问题的，一段时间后，测试同学和产品发现线上的弹幕列表没办法获取，新增弹幕也失败。</p>
+<h2 id="排查"><a class="header-anchor" href="#排查">✔</a>排查</h2>
+<p>我赶紧打开浏览器请求一下相关接口，没想到直接超时了。</p>
+<p>然后进去服务器，看了一下，并没有明显的报错日志；我在想会不会是java经常crash了，用了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef|grep java</span><br></pre></td></tr></table></figure>
+<p>查看了一下，java进程（tomcat）是在的，那为什么接口访问直接超时呢，是不是java进程已经<strong><em>假死</em></strong>了。</p>
+<p>我赶紧用jstat看一下java进程的GC情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gcutil pid</span><br></pre></td></tr></table></figure>
+<p>看了一下，进程基本没有GC发生，Perm space(永久代)占了95%+。</p>
+<p>开始，我觉得是不是老年代设得太小导致了，full GC频繁导致的？？？那为什么不会出现<strong>OOME</strong>，我把内存都调大了一倍左右，Permentent Space也增加了一倍左右。</p>
+<p>然后用ab进行压力测试，发现刚开始就是Young GC比较频繁（这个正常，因为正在压力测试，young GC频繁正常），Full GC并不是非常频繁，Permentent Space 也一直稳定在一半大小以下（因为比之前调大了一倍啦）。</p>
+<p>那这TM就奇怪了。。。</p>
+<p>。。。。。。</p>
+<p>我还是不死心一直怀疑是java进程的内存设置有问题，然后我又用jmap -histo 打印每个class的实例数目,内存占用,类全名信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -histo pid</span><br></pre></td></tr></table></figure>
+<p>看了一下，也没有那个类的数目非常地多，或者占用了非常多的内存。</p>
+<p>。。。</p>
+<p>从JVM的内存情况实在TMD看不出个所以然，那就只能看一下线程堆栈了，赶紧把线程堆栈打印出来看看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack -f pid</span><br></pre></td></tr></table></figure>
+<p>终于从线程堆栈可以看出点端倪来。</p>
+<p><img src="http://cxtblog.qiniudn.com/block_img.png" alt="image"></p>
+<p>我们可以看出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getDanmuList()</span><br></pre></td></tr></table></figure>
+<p>这个获取弹幕列表方法阻塞了，接着看一下堆栈里面调用了多少次这个方法：</p>
+<p><img src="http://cxtblog.qiniudn.com/block_img_2.png" alt="image"></p>
+<p>我们可以看出这个方法调用了150次之多，而且这150条线程都处于阻塞状态，这么多次阻塞，直接导致整个web服务器进程假死了。。。</p>
+<p>看一下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public List&#60;DanmuVO&#62; getDanmuList(long vid) &#123;&#10;&#9;&#9;ThriftClientWrapper&#60;VideoMessageServant.Iface&#62; client = null;&#10;&#9;&#9;List&#60;DanmuVO&#62; list = new ArrayList&#60;DanmuVO&#62;();&#10;&#9;&#9;try &#123;&#10;&#9;&#9;&#9;// &#21462;&#24471;&#23458;&#25143;&#31471;&#10;&#9;&#9;&#9;client = danmuFactory.createClient();&#10;            &#10;             // &#19994;&#21153;&#36923;&#36753;&#10;             // ...&#10;            &#10;&#9;&#9;&#125; catch (Exception e) &#123;&#10;&#9;&#9;&#9;LOG.error(String.format(&#34;&#33719;&#21462;&#35270;&#39057;%s&#24377;&#24149;&#21015;&#34920;&#22833;&#36133;&#34;, vid), e);&#10;&#9;&#9;&#125;&#10;&#9;&#9;&#10;&#9;&#9;return list;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>逻辑主要是获取一个thrift的连接，然后去调用服务化的接口，我们可以清楚地看到代码的最后并<strong>没有关闭连</strong>接。</p>
+<p>因为每次调用服务化接口，需要打开一个连接，但是调用完了并没有关闭，调用一多，连接池就没有连接可用了，后面调用服务化接口的请求就一直在等待，最后导致大量线程阻塞了，直接造成整个tomcat假死了。</p>
+<h2 id="解决"><a class="header-anchor" href="#解决">✔</a>解决</h2>
+<p>代码加上关闭连接的操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public List&#60;DanmuVO&#62; getDanmuList(long vid) &#123;&#10;&#9;ThriftClientWrapper&#60;VideoMessageServant.Iface&#62; client = null;&#10;&#9;List&#60;DanmuVO&#62; list = new ArrayList&#60;DanmuVO&#62;();&#10;&#9;try &#123;&#10;&#9;&#9;// &#21462;&#24471;&#23458;&#25143;&#31471;&#10;&#9;&#9;client = danmuFactory.createClient();&#10;           // &#19994;&#21153;&#36923;&#36753;&#10;           // ...&#10;&#9;    &#10;&#9;&#125; catch (Exception e) &#123;&#10;&#9;&#9;LOG.error(String.format(&#34;&#33719;&#21462;&#35270;&#39057;%s&#24377;&#24149;&#21015;&#34920;&#22833;&#36133;&#34;, vid), e);&#10;&#9;&#125;finally &#123;&#10;&#9;    // &#20851;&#38381;&#36830;&#25509;&#10;&#9;&#9;if(client != null)&#123;&#10;&#9;&#9;&#9;client.close();&#10;&#9;&#9;&#125;&#10;&#9;&#125;&#10;&#9;&#10;&#9;return list;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在用ab压测了一下，然后在看一下线程堆栈情况，终于恢复正常了。</p>
+<h2 id="教训"><a class="header-anchor" href="#教训">✔</a>教训</h2>
+<ul>
+<li>无论项目使用人数多少，都要进行压力测试。</li>
+<li>应用有外部系统调用，要记得有相关的连接关闭操作。</li>
+<li>应用有IO操作，也要有相关的IO关闭操作。</li>
 </ul>
 
       
@@ -747,158 +867,6 @@ s.setAttribute('data-timestamp', +new Date());
 
 
 
-   <div class="alignright">
- <a href="#" id="returnTop" 
-      style="text-decoration:none; bottom:-200px; position:fixed; text-align:center; width:16px; margin:10px;color:black;font-weight:bold;"
-      onclick="javascript:$('html, body').animate({scrollTop: 0}, {queue:false, duration:10});">↑返回顶部</a>
- </div>
-<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
-</script>
- <script type="text/javascript">
- $(function(){
-     $(window).scroll(function () {
-         if ($(document).scrollTop() >= 100) {
-             $('#returnTop').animate({bottom: "105px"}, { queue: false, duration: 10 }); 
-         } else {
-             $('#returnTop').animate({bottom: "-200px"}, { queue: false, duration: 10 }); 
-         }   
-     }); 
- }); 
- </script>
-<article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-27T06:31:07.000Z"><a href="/2016/05/27/浅谈JAVA虚拟机/">May 27 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/27/浅谈JAVA虚拟机/">浅谈JAVA虚拟机</a></h1>
-  
-
-    </header>
-     <div class="entry">
-         <!--02-->
-        <div id="toc" class="toc-article">
-    <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">为什么要了解JVM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">JRE的架构图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">Runtime的架构图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">如何判断对象已死</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">堆的架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">堆大小的相关配置参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">垃圾回收器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cms-concurrent-mark-sweep-并发标记清除垃圾回收器"><span class="toc-text">✔CMS（Concurrent Mark Sweep）并发标记清除垃圾回收器</span></a></li></ol></li></ol>
-</div>
-      
-        <h1>为什么要了解JVM</h1>
-<p>个人认为每一个JAVA程序员都要了解一下JAVA虚拟机，这样有利我们知道对象在内存的分布情况，有利于写出健壮的程序，不要动不动就内存溢出，内存泄漏。
-深入理解JAVA虚拟机的三种境界，我认为有：</p>
-<ol>
-<li>理解内存发布，垃圾回收，写出健壮的程序</li>
-<li>根据不同的业务场景进行jvm调优</li>
-<li>进行JVM的开发</li>
-</ol>
-<p><strong>事实上，个人认为能够达到第二层境界已经非常叼了，第三层境界就是超神了</strong>，比如<a href="http://rednaxelafx.iteye.com/blog/362738" target="_blank" rel="external">R大</a>。</p>
-<h1>JRE的架构图</h1>
-<p><img src="http://cxtblog.qiniudn.com/jre.png" alt="JRE">
-<strong>JRE</strong>全称==JAVA runtime environment== ，JRE上面是运行的JAVA程序，下面是OS和hardware相关。</p>
-<p>JRE包括JDK相关的API以及JAVA虚拟机。
-JAVA虚拟机包括了：GC(Garbage Collector垃圾回收器)，Class loader(类加载器)，Runtime（运行时包括执行引擎等），JIT（just in time compiler,即时编译器）。</p>
-<h1>Runtime的架构图</h1>
-<p><img src="http://cxtblog.qiniudn.com/runtime.png" alt="Runtime">
-如图所示，运行时数据区有：虚拟机栈，本地方法栈，
-堆，方法区，程序计数器。</p>
-<ul>
-<li>虚拟机栈，方法执行时会产生一个栈帧，栈帧包括了局部变量表，动态链接，方法出口，操作数栈等，栈帧随着方法的执行而入栈，方法结束后出栈。</li>
-<li>本地方法栈：和虚拟机栈一样，只不过存放的native的相关内容。</li>
-<li>堆：运行时占的最大的一块区域，堆的作用当然是存放对象。</li>
-<li>方法区，主要存放类加载的信息，常量，静态变量，即时编译器编译后的代码。</li>
-<li>程序计数器，主要存放执行的指令：分支循环，跳转，异常处理等。</li>
-</ul>
-<p>我们可以知道是，虚拟机栈，本地方法栈，程序计数器，都是线程私有的，所以不会线程安全问题。方法区以及堆是线程共享的。</p>
-<h1>如何判断对象已死</h1>
-<p><img src="http://cxtblog.qiniudn.com/deadinstan.png" alt=""></p>
-<ul>
-<li>引用计数算法
-引用计数算法没办法解决循环引用的死的对象，因为这些循环引用的对象的引用都不为0，但是都是没用的对象，必须从内存里面清除掉。如图中的O3 -&gt; O4 -&gt; O5.</li>
-<li>可达性性分析算法
-从GC-root出发，如果能够到达的引用的对象认为是存活的对象，没办法到达的对象认为是可以垃圾回收的对象。
-可以作为GC-root:</li>
-</ul>
-<ol>
-<li>虚拟机栈引用的对象</li>
-<li>方法区静态变量引用的对象</li>
-<li>方法区常量引用的对象</li>
-<li>本地方法栈引用的对象</li>
-</ol>
-<h1>堆的架构</h1>
-<p><img src="http://cxtblog.qiniudn.com/heap.png" alt="">
-<strong>堆逻辑分类可以分为新生代，老年代，还有永久代（在方法区）</strong></p>
-<ul>
-<li>新生代主要分为Eden区域和survivor区域（分为From和To）。一般新建的对象都会进到Eden区域，当进行minor GC时，没有被垃圾回收的对象就会进入到from区，当度过了多次minor GC就会进入到老年代。from和survivor区域在垃圾回收之后，其中的一个区域总是为空的。新生代采用的垃圾回收算法一般是copying算法。</li>
-<li>老年代：主要是存放一些经历了多次GC还没有被回收的对象，一些大对象会直接分配到老年代（超过了新生代的大小），所以写程序的时候切记不要分配过大的朝生夕灭的对象。</li>
-<li>永久代：主要是存放这类的信息等，虽然叫永久代，但是还是会回收的，只是回收的概率比较低。</li>
-</ul>
-<h1>堆大小的相关配置参数</h1>
-<p><img src="http://cxtblog.qiniudn.com/heapsize.jpg" alt="堆配置参数"></p>
-<h1>垃圾回收器</h1>
-<p><img src="http://cxtblog.qiniudn.com/garbageCollector.jpg" alt="垃圾回收器">
-一般分为4大类：单线程，多线程并行，并发标记清扫，还有就是GC集大成者G1回收器。
-分别在不同年代使用不同垃圾回收器，连线表示可以一起在配合使用。</p>
-<h1>垃圾回收算法</h1>
-<ul>
-<li>MARK-SWEEP(标记清除算法)：好处就是速度快，缺点就是会产生内存碎片。</li>
-<li>Copying（复制算法）：在新生代使用，思想就是把内存分为两块，将存活的对象复制到另一块区域，然后直接清楚死亡对象的那个区域，这就是复制算法，复制算法的有点也是比较简单，缺点就是内存的利用率没有达到100%，不过新生代的对象大部分都是朝生夕灭的，垃圾回收的占比可以达到百分之八九十。所以在新生代非常适合使用复制算法。</li>
-<li>MARK-COMPACT（标记整理）：有三个过程：标记，清除，整理。特点就是不会产生内存碎片，缺点就是效率不如标记清除和复制算法。</li>
-<li>Generation Collect（分代回收）：这是一种思想，根据对象存活的时间进行分代回收。
-不同的垃圾回收器使用不同垃圾回收算法：
-Serial：新生代（Copying）,老年代（mark-compact）
-ParaNew：新生代（Copying）,老年代（mark-compact）
-Parallel scavenge：新生代（Copying）
-Parallel Old：老年代（mark-compact）
-CMS：老年代（mark-sweep）</li>
-</ul>
-<h2 id="cms-concurrent-mark-sweep-并发标记清除垃圾回收器"><a class="header-anchor" href="#cms-concurrent-mark-sweep-并发标记清除垃圾回收器">✔</a>CMS（Concurrent Mark Sweep）并发标记清除垃圾回收器</h2>
-<p><img src="http://cxtblog.qiniudn.com/cms.jpg" alt="CMS">
-##G1(Garbage First回收器)##
-<img src="http://cxtblog.qiniudn.com/G1.jpg" alt="G!">
-#JAVA程序的生命历程#
-<img src="http://cxtblog.qiniudn.com/javacycle.png" alt=""></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-    </footer>
-  </div>
-</article>
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://cxt-github-io.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
-
-
-
-
-
-
-
 
 <nav id="pagination">
   
@@ -911,7 +879,7 @@ s.setAttribute('data-timestamp', +new Date());
   
   <div class="widget tag">
     <h3 class="title">归档</h3>
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年03月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年01月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">2016年05月</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">2016年01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">2015年08月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">2014年12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">2014年11月</a><span class="archive-list-count">1</span></li></ul>
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年03月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年01月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">2016年05月</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">2016年01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">2015年08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">2014年12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">2014年11月</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 
@@ -920,7 +888,7 @@ s.setAttribute('data-timestamp', +new Date());
   <h3 class="title">分类</h3>
   <ul class="entry">
   
-    <li><a href="/categories/JVM/">JVM</a><small>1</small></li>
+    <li><a href="/categories/JVM/">JVM</a><small>2</small></li>
   
     <li><a href="/categories/Java/">Java</a><small>3</small></li>
   
@@ -948,7 +916,7 @@ s.setAttribute('data-timestamp', +new Date());
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 13.33px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 

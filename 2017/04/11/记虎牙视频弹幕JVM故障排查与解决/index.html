@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>明确地知道自己想要什么 | CXT&#39;s Blog</title>
+  <title>记虎牙视频弹幕JVM故障排查与解决 | CXT&#39;s Blog</title>
   <meta name="author" content="cxt">
   
-  <meta name="description" content="#关于自己想要什么#
-不得不说关于自己想要的，必须明确自己人生最终是想过上什么样的生活。我这个人可能是一个矛盾体的存在，也和很多庸人一样，其实我就是庸人，我既想扬名立万，纵横捭阖；又想着过着安逸舒适，衣食无忧的生活。这是一个极大的困扰。">
+  <meta name="description" content="✔背景
+3月份在做一个虎牙视频弹幕的项目，完成设计和开发后进行功能测试没有什么问题，因为这个项目弹幕的获取和新增都是去调用虎牙那边的thrift服务，压力主要还是在他们那边，加之产品经理着急项目赶紧上线，所有没有进行压力测试，功能测试OK了就赶紧发布了。
+项目上线进行一些功能回归测试是没有问题的，一">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="明确地知道自己想要什么"/>
+  <meta property="og:title" content="记虎牙视频弹幕JVM故障排查与解决"/>
   <meta property="og:site_name" content="CXT&#39;s Blog"/>
 
   
@@ -223,11 +224,11 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-08-30T06:45:43.000Z"><a href="/2015/08/30/明确地知道自己想要什么/">Aug 30 2015</a></time>
+        <time datetime="2017-04-11T14:13:17.000Z"><a href="/2017/04/11/记虎牙视频弹幕JVM故障排查与解决/">Apr 11 2017</a></time>
       
       
   
-    <h1 class="title">明确地知道自己想要什么</h1>
+    <h1 class="title">记虎牙视频弹幕JVM故障排查与解决</h1>
   
 
     </header>
@@ -235,38 +236,66 @@
          <!--02-->
         <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-text">✔背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排查"><span class="toc-text">✔排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-text">✔解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#教训"><span class="toc-text">✔教训</span></a></li></ol>
 </div>
       
-        <p><img src="http://7s1ri4.com1.z0.glb.clouddn.com/d833c895d143ad4b1b826d1186025aafa50f06b6.jpg" alt="">
-#关于自己想要什么#
-不得不说关于自己想要的，必须明确自己人生最终是想过上什么样的生活。我这个人可能是一个矛盾体的存在，也和很多庸人一样，其实我就是庸人，我既想扬名立万，纵横捭阖；又想着过着安逸舒适，衣食无忧的生活。这是一个极大的困扰。</p>
-<a id="more"></a>
-<p>但是现在我在想现在这阶段，我这一生其实是没办法去做到第一点的，究其我一生，无论是运气或者自身的努力是无法做到扬名立万和纵横捭阖的。
-我在想对于我这样一个庸人，如果凭自己的努力加上一点运气，再加上好好自律也许财务自由过上无忧无虑的生活还是不会非常地困难。
-#人生的目标#
-关于自己人生的目标，我想我这一生最平凡的目标就就是过上无忧无虑的生活，实现财务自由。当然我这个目标可能是理想化的，但是再难我也要去实现之。
-#阶段#
-现在（2016年之前），现阶段（2020之前），以后。
-#现在#
-现在的目标很简单，今年到明年这一段时间我的目标就是努力实现自己技术上真正的提升，编码上的，理论与实践上的结合。明年开春之后就可以开始一轮的面试，我希望自己能够收获3-5个的offer，能够实现自己不同的选择中。这个阶段我想更多的是为了钱和时间，<strong><em>我想这个阶段无论如何我都必须逃离了，这是必须选择的，我想逃离的结果无论如何都会比现在好更多的。所以这是这阶段必须执行的。</em></strong>
-#先阶段#
-现阶段我想的的是不断地提高自己的技术，达到一定的水平，然后可以选择一家自己真正想去的公司干个3~5年，存有一定积蓄。然后去一家创业公司搏一把，如果不行到时以我的技术能力从新再找一家比较大的自己喜欢的大公司干上几年然后有一定的积蓄，再思考后面的路，我也觉得不会走的太凄苦。当然创业公司搞的还是要自己有一点气魄，不然也会很悲催的。
-所以路线是：<strong>技术能力牛逼-&gt;大公司镀金-&gt;创业公司搏一把 OR 大公司继续拼搏</strong>
-有时候更多的就是命，但是我相信我这一条路线是不会出现太多的错误，也能走到自己渴望的那个程度。
-#以后#
-以后我估计我自己还是会回潮州的，回去买套房子，做一点小生意，拥有自己的家庭，每天可以看书，运动，写自己喜欢的代码，那样的日子是多么爽啊，当然现在的努力就是为了将来更好。</p>
-<p><strong>这些就是我这个庸人所要的人生!!!</strong></p>
+        <h2 id="背景"><a class="header-anchor" href="#背景">✔</a>背景</h2>
+<p>3月份在做一个虎牙视频弹幕的项目，完成设计和开发后进行功能测试没有什么问题，因为这个项目弹幕的获取和新增都是去调用虎牙那边的thrift服务，压力主要还是在他们那边，加之产品经理着急项目赶紧上线，所有没有进行压力测试，功能测试OK了就赶紧发布了。</p>
+<p>项目上线进行一些功能回归测试是没有问题的，一段时间后，测试同学和产品发现线上的弹幕列表没办法获取，新增弹幕也失败。</p>
+<h2 id="排查"><a class="header-anchor" href="#排查">✔</a>排查</h2>
+<p>我赶紧打开浏览器请求一下相关接口，没想到直接超时了。</p>
+<p>然后进去服务器，看了一下，并没有明显的报错日志；我在想会不会是java经常crash了，用了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef|grep java</span><br></pre></td></tr></table></figure>
+<p>查看了一下，java进程（tomcat）是在的，那为什么接口访问直接超时呢，是不是java进程已经<strong><em>假死</em></strong>了。</p>
+<p>我赶紧用jstat看一下java进程的GC情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gcutil pid</span><br></pre></td></tr></table></figure>
+<p>看了一下，进程基本没有GC发生，Perm space(永久代)占了95%+。</p>
+<p>开始，我觉得是不是老年代设得太小导致了，full GC频繁导致的？？？那为什么不会出现<strong>OOME</strong>，我把内存都调大了一倍左右，Permentent Space也增加了一倍左右。</p>
+<p>然后用ab进行压力测试，发现刚开始就是Young GC比较频繁（这个正常，因为正在压力测试，young GC频繁正常），Full GC并不是非常频繁，Permentent Space 也一直稳定在一半大小以下（因为比之前调大了一倍啦）。</p>
+<p>那这TM就奇怪了。。。</p>
+<p>。。。。。。</p>
+<p>我还是不死心一直怀疑是java进程的内存设置有问题，然后我又用jmap -histo 打印每个class的实例数目,内存占用,类全名信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -histo pid</span><br></pre></td></tr></table></figure>
+<p>看了一下，也没有那个类的数目非常地多，或者占用了非常多的内存。</p>
+<p>。。。</p>
+<p>从JVM的内存情况实在TMD看不出个所以然，那就只能看一下线程堆栈了，赶紧把线程堆栈打印出来看看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack -f pid</span><br></pre></td></tr></table></figure>
+<p>终于从线程堆栈可以看出点端倪来。</p>
+<p><img src="http://cxtblog.qiniudn.com/block_img.png" alt="image"></p>
+<p>我们可以看出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getDanmuList()</span><br></pre></td></tr></table></figure>
+<p>这个获取弹幕列表方法阻塞了，接着看一下堆栈里面调用了多少次这个方法：</p>
+<p><img src="http://cxtblog.qiniudn.com/block_img_2.png" alt="image"></p>
+<p>我们可以看出这个方法调用了150次之多，而且这150条线程都处于阻塞状态，这么多次阻塞，直接导致整个web服务器进程假死了。。。</p>
+<p>看一下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public List&#60;DanmuVO&#62; getDanmuList(long vid) &#123;&#10;&#9;&#9;ThriftClientWrapper&#60;VideoMessageServant.Iface&#62; client = null;&#10;&#9;&#9;List&#60;DanmuVO&#62; list = new ArrayList&#60;DanmuVO&#62;();&#10;&#9;&#9;try &#123;&#10;&#9;&#9;&#9;// &#21462;&#24471;&#23458;&#25143;&#31471;&#10;&#9;&#9;&#9;client = danmuFactory.createClient();&#10;            &#10;             // &#19994;&#21153;&#36923;&#36753;&#10;             // ...&#10;            &#10;&#9;&#9;&#125; catch (Exception e) &#123;&#10;&#9;&#9;&#9;LOG.error(String.format(&#34;&#33719;&#21462;&#35270;&#39057;%s&#24377;&#24149;&#21015;&#34920;&#22833;&#36133;&#34;, vid), e);&#10;&#9;&#9;&#125;&#10;&#9;&#9;&#10;&#9;&#9;return list;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>逻辑主要是获取一个thrift的连接，然后去调用服务化的接口，我们可以清楚地看到代码的最后并<strong>没有关闭连</strong>接。</p>
+<p>因为每次调用服务化接口，需要打开一个连接，但是调用完了并没有关闭，调用一多，连接池就没有连接可用了，后面调用服务化接口的请求就一直在等待，最后导致大量线程阻塞了，直接造成整个tomcat假死了。</p>
+<h2 id="解决"><a class="header-anchor" href="#解决">✔</a>解决</h2>
+<p>代码加上关闭连接的操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public List&#60;DanmuVO&#62; getDanmuList(long vid) &#123;&#10;&#9;ThriftClientWrapper&#60;VideoMessageServant.Iface&#62; client = null;&#10;&#9;List&#60;DanmuVO&#62; list = new ArrayList&#60;DanmuVO&#62;();&#10;&#9;try &#123;&#10;&#9;&#9;// &#21462;&#24471;&#23458;&#25143;&#31471;&#10;&#9;&#9;client = danmuFactory.createClient();&#10;           // &#19994;&#21153;&#36923;&#36753;&#10;           // ...&#10;&#9;    &#10;&#9;&#125; catch (Exception e) &#123;&#10;&#9;&#9;LOG.error(String.format(&#34;&#33719;&#21462;&#35270;&#39057;%s&#24377;&#24149;&#21015;&#34920;&#22833;&#36133;&#34;, vid), e);&#10;&#9;&#125;finally &#123;&#10;&#9;    // &#20851;&#38381;&#36830;&#25509;&#10;&#9;&#9;if(client != null)&#123;&#10;&#9;&#9;&#9;client.close();&#10;&#9;&#9;&#125;&#10;&#9;&#125;&#10;&#9;&#10;&#9;return list;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在用ab压测了一下，然后在看一下线程堆栈情况，终于恢复正常了。</p>
+<h2 id="教训"><a class="header-anchor" href="#教训">✔</a>教训</h2>
+<ul>
+<li>无论项目使用人数多少，都要进行压力测试。</li>
+<li>应用有外部系统调用，要记得有相关的连接关闭操作。</li>
+<li>应用有IO操作，也要有相关的IO关闭操作。</li>
+</ul>
 
       
     </div>
     <footer>
       
         
+  
+  <div class="categories">
+    <a href="/categories/JVM/">JVM</a>
+  </div>
+
         
   
   <div class="tags">
-    <a href="/tags/成长/">成长</a>
+    <a href="/tags/JVM/">JVM</a>
   </div>
 
         <div class="bdsharebuttonbox"><a class="bds_more" href="#" data-cmd="more"></a><a title="分享到QQ空间" class="bds_qzone" href="#" data-cmd="qzone"></a><a title="分享到新浪微博" class="bds_tsina" href="#" data-cmd="tsina"></a><a title="分享到腾讯微博" class="bds_tqq" href="#" data-cmd="tqq"></a><a title="分享到人人网" class="bds_renren" href="#" data-cmd="renren"></a><a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a></div>
@@ -307,7 +336,7 @@ s.setAttribute('data-timestamp', +new Date());
   
   <div class="widget tag">
     <h3 class="title">归档</h3>
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年03月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年01月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">2016年05月</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">2016年01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">2015年08月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">2014年12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">2014年11月</a><span class="archive-list-count">1</span></li></ul>
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年03月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年01月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">2016年05月</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">2016年01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">2015年08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">2014年12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">2014年11月</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 
@@ -316,7 +345,7 @@ s.setAttribute('data-timestamp', +new Date());
   <h3 class="title">分类</h3>
   <ul class="entry">
   
-    <li><a href="/categories/JVM/">JVM</a><small>1</small></li>
+    <li><a href="/categories/JVM/">JVM</a><small>2</small></li>
   
     <li><a href="/categories/Java/">Java</a><small>3</small></li>
   
@@ -344,7 +373,7 @@ s.setAttribute('data-timestamp', +new Date());
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 13.33px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 
