@@ -221,6 +221,138 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-08-03T00:21:05.000Z"><a href="/2017/08/03/JVM工具介绍与使用/">Aug 3 2017</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/08/03/JVM工具介绍与使用/">JVM工具介绍与使用</a></h1>
+  
+
+    </header>
+     <div class="entry">
+         <!--02-->
+        <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#jps命令"><span class="toc-text">✔jps命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jstat命令"><span class="toc-text">✔jstat命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jmap命令"><span class="toc-text">✔jmap命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jstack打印java进程的堆栈信息"><span class="toc-text">✔jstack打印java进程的堆栈信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图形化工具mat-memory-analyze-tool"><span class="toc-text">✔图形化工具MAT(memory analyze tool)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">✔总结</span></a></li></ol>
+</div>
+      
+        <h2 id="jps命令"><a class="header-anchor" href="#jps命令">✔</a>jps命令</h2>
+<p>介绍：查看所有具有权限的java进程的具体状态：包括进程ID，进程启动路径，以及进程启动参数。</p>
+<p>使用格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps [options] [hostid]</span><br></pre></td></tr></table></figure>
+<p>常用参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-l #&#36755;&#20986;&#24212;&#29992;&#31243;&#24207;&#20027;&#31867;&#30340;&#23436;&#25972;&#21253;&#21517;&#65292;&#25110;&#32773;&#26159;&#24212;&#29992;&#31243;&#24207;JAR&#25991;&#20214;&#30340;&#23436;&#25972;&#36335;&#24452;&#12290;&#10;-v #&#36755;&#20986;&#20256;&#32473;JVM&#30340;&#21442;&#25968;&#12290;</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-113:~# jps&#10;59117 WatchdogManager&#10;59171 Resin&#10;15374 Jps</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-113:~# jps -v&#10;59117 WatchdogManager -Dresin.watchdog=a -Djava.util.logging.manager=com.caucho.log.LogManagerImpl -Djavax.management.builder.initial=com.caucho.jmx.MBeanServerBuilderImpl -Djava.awt.headless=true -Dresin.home=/usr/local/resin/ -Dresin.root=/usr/local/resin -Xrs -Xss256k -Xmx32m&#10;15401 Jps -Dapplication.home=/opt/jdk1.7.0_45 -Xms8m&#10;59171 Resin -Xss1m -XX:MaxGCPauseMillis=200 -Dnetworkaddress.cache.ttl=600 -Xms1001m -Xmx1001m -Dresin.server=1 -Djava.util.logging.manager=com.caucho.log.LogManagerImpl -Djava.system.class.loader=com.caucho.loader.SystemClassLoader -Djavax.management.builder.initial=com.caucho.jmx.MBeanServerBuilderImpl -Djava.awt.headless=true -Dresin.home=/usr/local/resin/ -Dresin.watchdog=a -Djava.util.logging.manager=com.caucho.log.LogManagerImpl -Djavax.management.builder.initial=com.caucho.jmx.MBeanServerBuilderImpl -Djava.awt.headless=true -Dresin.home=/usr/local/resin/ -Dresin.root=/usr/local/resin -Dresin.watchdog=a -Djava.util.logging.manager=com.caucho.log.LogManagerImpl -Djavax.management.builder.initial=com.caucho.jmx.MBeanServerBuilderImpl -Djava.awt.headless=true -Dresin.home=/usr/local/resin/ -Dresin.root=/usr/local/resin</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-113:~# jps -l&#10;59117 com.caucho.boot.WatchdogManager&#10;59171 com.caucho.server.resin.Resin&#10;15486 sun.tools.jps.Jps</span><br></pre></td></tr></table></figure>
+<h2 id="jstat命令"><a class="header-anchor" href="#jstat命令">✔</a>jstat命令</h2>
+<p>介绍：对堆的使用情况进行实时的命令行统计。</p>
+<ul>
+<li>类加载及卸载情况</li>
+<li>新生代，老年代及永久代的容量及使用情况</li>
+<li>新生代，老年代及永久代垃圾回收情况，垃圾回收次数和垃圾回收时间</li>
+<li>新生代中Eden区及Survior区中容量及分配情况等</li>
+</ul>
+<p>使用格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -&#60;option&#62; [-t] [-h&#60;lines&#62;] &#60;vmid&#62; [&#60;interval&#62; [&#60;count&#62;]]</span><br></pre></td></tr></table></figure>
+<p>常用的option</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-113:~# jstat -options&#10;-class&#10;-compiler&#10;-gc&#10;-gccapacity&#10;-gccause&#10;-gcnew&#10;-gcnewcapacity&#10;-gcold&#10;-gcoldcapacity&#10;-gcpermcapacity&#10;-gcutil&#10;-printcompilation</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-113:~# jstat -gcutil 59171 1000 5&#10;  S0     S1     E      O      P     YGC     YGCT    FGC    FGCT     GCT   &#10; 57.29   0.00  63.16  79.74  81.34   1760  151.129     5    3.705  154.834&#10; 57.29   0.00  63.16  79.74  81.34   1760  151.129     5    3.705  154.834&#10; 57.29   0.00  63.16  79.74  81.34   1760  151.129     5    3.705  154.834&#10; 57.29   0.00  63.16  79.74  81.34   1760  151.129     5    3.705  154.834&#10; 57.29   0.00  64.39  79.74  81.34   1760  151.129     5    3.705  154.834</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-113:~# jstat -gc 59171 1000 5&#10; S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   &#10;3072.0 3072.0 1760.1  0.0   335360.0 251031.8  683520.0   545011.9  83968.0 68301.5   1760  151.129   5      3.705  154.834&#10;3072.0 3072.0 1760.1  0.0   335360.0 251153.7  683520.0   545011.9  83968.0 68301.5   1760  151.129   5      3.705  154.834&#10;3072.0 3072.0 1760.1  0.0   335360.0 251153.7  683520.0   545011.9  83968.0 68301.5   1760  151.129   5      3.705  154.834&#10;3072.0 3072.0 1760.1  0.0   335360.0 251153.7  683520.0   545011.9  83968.0 68301.5   1760  151.129   5      3.705  154.834&#10;3072.0 3072.0 1760.1  0.0   335360.0 251153.7  683520.0   545011.9  83968.0 68301.5   1760  151.129   5      3.705  154.834</span><br></pre></td></tr></table></figure>
+<h2 id="jmap命令"><a class="header-anchor" href="#jmap命令">✔</a>jmap命令</h2>
+<p>介绍：打印进程内存中的所有对象（对象类名，数量，大小）。</p>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap [option] &#60;pid&#62;</span><br></pre></td></tr></table></figure>
+<p>常用参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-heap                to print java heap summary&#10;-histo[:live]        to print histogram of java object heap; if the &#34;live&#34;&#10;                     suboption is specified, only count live objects&#10;-permstat            to print permanent generation statistics&#10;-finalizerinfo       to print information on objects awaiting finalization&#10;-dump:&#60;dump-options&#62; to dump java heap in hprof binary format&#10;                     dump-options:&#10;                       live         dump only live objects; if not specified,&#10;                                    all objects in the heap are dumped.&#10;                       format=b     binary format&#10;                       file=&#60;file&#62;  dump heap to &#60;file&#62;&#10;                     Example: jmap -dump:live,format=b,file=heap.bin &#60;pid&#62;&#10;-F                   force. Use with -dump:&#60;dump-options&#62; &#60;pid&#62; or -histo&#10;                     to force a heap dump or histogram when &#60;pid&#62; does not&#10;                     respond. The &#34;live&#34; suboption is not supported&#10;                     in this mode.</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<p>打印所以对象的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-113:~# jmap -F  -histo 59117&#10;Attaching to process ID 59117, please wait...&#10;Debugger attached successfully.&#10;Server compiler detected.&#10;JVM version is 24.45-b08&#10;Iterating over heap. This may take a while...&#10;Object Histogram:&#10;&#10;num       #instances    #bytes  Class description&#10;--------------------------------------------------------------------------&#10;1:              9272    7797920 byte[]&#10;2:              33781   4515096 * ConstMethodKlass&#10;3:              33781   4333168 * MethodKlass&#10;4:              2751    3170088 * ConstantPoolKlass&#10;5:              2751    1971192 * InstanceKlassKlass&#10;6:              2046    1726176 * ConstantPoolCacheKlass&#10;7:              21264   1535528 char[]&#10;8:              41      1349264 com.caucho.util.LruCache$CacheItem[]&#10;9:              46838   749408  java.lang.Object&#10;10:             1371    572952  int[]&#10;11:             5682    473872  java.lang.Object[]&#10;12:             19461   467064  java.lang.String&#10;13:             2948    352512  java.lang.Class&#10;14:             3478    278240  java.lang.reflect.Method&#10;15:             613     254928  * MethodDataKlass&#10;16:             4383    247776  * System ObjArray&#10;17:             3670    223024  short[]&#10;18:             6732    215424  java.util.HashMap$Entry&#10;19:             5151    164832  java.util.concurrent.ConcurrentHashMap$HashEntry&#10;20:             1238    146688  java.util.HashMap$Entry[]&#10;21:             3479    139160  java.util.LinkedHashMap$Entry&#10;22:             5504    132096  java.util.ArrayList</span><br></pre></td></tr></table></figure>
+<p>将内存dump出来（然后可以用MAT图形化工具来分析）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-15:~# jmap -dump:format=b,file=test.bin 51419&#10;Dumping heap to /root/test.bin ...&#10;Heap dump file created&#10;&#10;root@ip-10-21-151-15:~# ll test.bin &#10;-rw------- 1 root root 25598311 Aug  2 16:15 test.bin</span><br></pre></td></tr></table></figure>
+<h2 id="jstack打印java进程的堆栈信息"><a class="header-anchor" href="#jstack打印java进程的堆栈信息">✔</a>jstack打印java进程的堆栈信息</h2>
+<p>介绍：打印java进程的堆栈信息</p>
+<p>使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack -F [-m] [-l] &#60;pid&#62;</span><br></pre></td></tr></table></figure>
+<p>相关参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-F  to force a thread dump. Use when jstack &#60;pid&#62; does not respond (process is hung)&#10;-m  to print both java and native frames (mixed mode)&#10;-l  long listing. Prints additional information about locks</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-21-151-15:~# jstack -F 51419&#10;Attaching to process ID 51419, please wait...&#10;Debugger attached successfully.&#10;Server compiler detected.&#10;JVM version is 24.45-b08&#10;Deadlock Detection:&#10;&#10;No deadlocks found.&#10;&#10;Thread 30624: (state = BLOCKED)&#10; - sun.misc.Unsafe.park(boolean, long) @bci=0 (Compiled frame; information may be imprecise)&#10; - java.util.concurrent.locks.LockSupport.park() @bci=5, line=315 (Compiled frame)&#10; - com.caucho.util.ThreadPool$PoolThread.nextTask() @bci=254, line=962 (Compiled frame)&#10; - com.caucho.util.ThreadPool$PoolThread.runTasks() @bci=26, line=887 (Compiled frame)&#10; - com.caucho.util.ThreadPool$PoolThread.run() @bci=69, line=866 (Interpreted frame)&#10;&#10;&#10;Thread 56062: (state = BLOCKED)&#10; - sun.misc.Unsafe.park(boolean, long) @bci=0 (Compiled frame; information may be imprecise)&#10; - java.util.concurrent.locks.LockSupport.park() @bci=5, line=315 (Compiled frame)&#10; - com.caucho.util.ThreadPool$PoolThread.nextTask() @bci=254, line=962 (Compiled frame)&#10; - com.caucho.util.ThreadPool$PoolThread.runTasks() @bci=26, line=887 (Compiled frame)&#10; - com.caucho.util.ThreadPool$PoolThread.run() @bci=69, line=866 (Interpreted frame)</span><br></pre></td></tr></table></figure>
+<h2 id="图形化工具mat-memory-analyze-tool"><a class="header-anchor" href="#图形化工具mat-memory-analyze-tool">✔</a>图形化工具MAT(memory analyze tool)</h2>
+<p>基本用法：</p>
+<ul>
+<li>先用jmap命令将内存dump出到一个文件中</li>
+<li>然后打开MAT,在MAT中打开dump文件</li>
+<li>然后进行相关分析</li>
+</ul>
+<h2 id="总结"><a class="header-anchor" href="#总结">✔</a>总结</h2>
+<p>jvm故障排查基本就用到这些工具，因为我们的服务器都是linux，都是命令行终端的，所以一般不会使用到windows下面的jdk自带的图形化工具。</p>
+<p>熟练使用这些工具，可以使我们在故障排查迅速地找到问题的所在。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+    </footer>
+  </div>
+</article>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://cxt-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+
+
+
+
+
+   <div class="alignright">
+ <a href="#" id="returnTop" 
+      style="text-decoration:none; bottom:-200px; position:fixed; text-align:center; width:16px; margin:10px;color:black;font-weight:bold;"
+      onclick="javascript:$('html, body').animate({scrollTop: 0}, {queue:false, duration:10});">↑返回顶部</a>
+ </div>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+</script>
+ <script type="text/javascript">
+ $(function(){
+     $(window).scroll(function () {
+         if ($(document).scrollTop() >= 100) {
+             $('#returnTop').animate({bottom: "105px"}, { queue: false, duration: 10 }); 
+         } else {
+             $('#returnTop').animate({bottom: "-200px"}, { queue: false, duration: 10 }); 
+         }   
+     }); 
+ }); 
+ </script>
+<article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-06-30T06:56:15.000Z"><a href="/2017/06/30/java类加载过程与类加载器/">Jun 30 2017</a></time>
       
       
@@ -788,83 +920,6 @@ s.setAttribute('data-timestamp', +new Date());
 
 
 
-   <div class="alignright">
- <a href="#" id="returnTop" 
-      style="text-decoration:none; bottom:-200px; position:fixed; text-align:center; width:16px; margin:10px;color:black;font-weight:bold;"
-      onclick="javascript:$('html, body').animate({scrollTop: 0}, {queue:false, duration:10});">↑返回顶部</a>
- </div>
-<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
-</script>
- <script type="text/javascript">
- $(function(){
-     $(window).scroll(function () {
-         if ($(document).scrollTop() >= 100) {
-             $('#returnTop').animate({bottom: "105px"}, { queue: false, duration: 10 }); 
-         } else {
-             $('#returnTop').animate({bottom: "-200px"}, { queue: false, duration: 10 }); 
-         }   
-     }); 
- }); 
- </script>
-<article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-01-08T08:11:43.000Z"><a href="/2017/01/08/2016-this-year/">Jan 8 2017</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/01/08/2016-this-year/">2016 this year</a></h1>
-  
-
-    </header>
-     <div class="entry">
-         <!--01-->
-        <p><img src="http://cxtblog.qiniudn.com/753046307781395791.jpg" alt="人才公寓"></p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2017/01/08/2016-this-year/#more" class="more-link">阅读全文</a>
-          </div>
-        
-        
-      
-    </footer>
-  </div>
-</article>
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://cxt-github-io.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
-
-
-
-
-
-
-
 
 <nav id="pagination">
   
@@ -877,7 +932,7 @@ s.setAttribute('data-timestamp', +new Date());
   
   <div class="widget tag">
     <h3 class="title">归档</h3>
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年03月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年01月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">2016年05月</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">2016年01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">2015年08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">2014年12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">2014年11月</a><span class="archive-list-count">1</span></li></ul>
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年03月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年01月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">2016年05月</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">2016年01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">2015年08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">2014年12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">2014年11月</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 
@@ -886,7 +941,7 @@ s.setAttribute('data-timestamp', +new Date());
   <h3 class="title">分类</h3>
   <ul class="entry">
   
-    <li><a href="/categories/JVM/">JVM</a><small>2</small></li>
+    <li><a href="/categories/JVM/">JVM</a><small>3</small></li>
   
     <li><a href="/categories/Java/">Java</a><small>3</small></li>
   
@@ -914,7 +969,7 @@ s.setAttribute('data-timestamp', +new Date());
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 13.33px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
+    <a href="/tags/2017/" style="font-size: 10px;">2017</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/JVM/" style="font-size: 16.67px;">JVM</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/redis/" style="font-size: 13.33px;">redis</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/坑/" style="font-size: 10px;">坑</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/工作/" style="font-size: 13.33px;">工作</a> <a href="/tags/开始/" style="font-size: 13.33px;">开始</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/成长/" style="font-size: 20px;">成长</a> <a href="/tags/找工作/" style="font-size: 10px;">找工作</a> <a href="/tags/数据库架构/" style="font-size: 10px;">数据库架构</a> <a href="/tags/琐碎/" style="font-size: 10px;">琐碎</a> <a href="/tags/系统设计/" style="font-size: 16.67px;">系统设计</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/负载均衡/" style="font-size: 10px;">负载均衡</a> <a href="/tags/集合/" style="font-size: 13.33px;">集合</a> <a href="/tags/高可用/" style="font-size: 13.33px;">高可用</a>
   </div>
 </div>
 
